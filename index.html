@@ -193,110 +193,94 @@
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section class="section-padding bg-white" id="services">
-            <div class="container-custom">
-                <div class="text-center mb-20 animate-on-scroll">
-                    <h2 class="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-8 tracking-tight">
-                        Choose Your <span class="text-gradient">Adventure</span>
-                    </h2>
-                    <p class="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto font-light leading-relaxed">
-                        Discover Prague's mysteries through two unique experiences designed for different adventure
-                        seekers.
-                    </p>
-                </div>
+        <!-- Tour Feature Section — split layout -->
+        <section id="services" style="display:grid; grid-template-columns: 1fr 1fr; min-height: 600px;">
 
-                <div class="max-w-2xl mx-auto">
-                    <!-- Private Tours Card -->
-                    <div class="card-service animate-on-scroll group">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <div
-                                class="h-72 bg-gradient-to-br from-amber-50 via-amber-100 to-amber-200 flex items-center justify-center relative">
-                                <!-- Background pattern -->
-                                <div class="absolute inset-0 opacity-10">
-                                    <svg class="w-full h-full" viewBox="0 0 100 100" fill="none">
-                                        <defs>
-                                            <pattern id="prague-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                                                <circle cx="10" cy="10" r="1" fill="currentColor"/>
-                                            </pattern>
-                                        </defs>
-                                        <rect width="100" height="100" fill="url(#prague-pattern)"/>
-                                    </svg>
-                                </div>
-                                <!-- Main icon -->
-                                <div class="relative z-10 text-center">
-                                    <svg class="w-24 h-24 text-amber-600 mx-auto mb-4" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                        </path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    <div class="text-amber-700 font-semibold text-sm">WALKING TOUR</div>
-                                </div>
-                            </div>
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-2xl">
-                            </div>
-                        </div>
-                        <div class="p-8">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full">PRIVATE TOUR</span>
-                                <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-medium rounded-full">2-8 PEOPLE</span>
-                            </div>
-                            <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 mb-4">Dan Brown Prague Walking Tour</h3>
-                            <p class="text-slate-600 mb-6 text-lg leading-relaxed">
-                                Follow in the footsteps of Robert Langdon through Prague's mysterious streets. Discover hidden symbols, ancient secrets, and cryptographic puzzles woven into the city's medieval architecture.
-                            </p>
-                            
-                            <!-- Key highlights -->
-                            <div class="space-y-2 mb-6">
-                                <div class="flex items-center text-sm text-slate-600">
-                                    <svg class="w-4 h-4 text-accent-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    Expert guide with historical expertise
-                                </div>
-                                <div class="flex items-center text-sm text-slate-600">
-                                    <svg class="w-4 h-4 text-accent-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    Hidden locations & secret passages
-                                </div>
-                                <div class="flex items-center text-sm text-slate-600">
-                                    <svg class="w-4 h-4 text-accent-gold mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    Interactive puzzles & mysteries
-                                </div>
-                            </div>
+            <!-- Left: Photo fills the column completely -->
+            <div style="position: relative; overflow: hidden; min-height: 400px;">
+                <img
+                    src="./images/prague_hero.png"
+                    alt="Aerial view of Prague at golden hour"
+                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;"
+                >
+                <!-- right-edge fade into content panel -->
+                <div style="position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, #0f0f23 100%);"></div>
+            </div>
 
-                            <div class="flex items-center justify-between mb-8 p-4 bg-slate-50 rounded-xl">
-                                <div>
-                                    <div class="text-accent-gold font-bold text-2xl">€150</div>
-                                    <div class="text-slate-500 text-sm">per group</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-slate-700 font-semibold">2-3 hours</div>
-                                    <div class="text-slate-500 text-sm">flexible duration</div>
-                                </div>
-                            </div>
-                            <a href="private-tour.html" class="btn-primary w-full flex items-center justify-center group">
-                                Learn More
-                                <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </a>
-                        </div>
+            <!-- Right: Dark content panel -->
+            <div style="background: #0f0f23; display: flex; align-items: center; padding: 4rem 3.5rem;">
+                <div class="animate-on-scroll" style="max-width: 480px; width: 100%;">
+
+                    <!-- Eyebrow badge -->
+                    <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid rgba(201,169,110,0.35); border-radius: 999px; margin-bottom: 28px;">
+                        <svg width="14" height="14" fill="none" stroke="#c9a96e" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span style="color: #c9a96e; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Private Walking Tour</span>
                     </div>
 
-                    
+                    <!-- Title -->
+                    <h2 class="font-display" style="font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #ffffff; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em;">
+                        Dan Brown Prague<br>
+                        <span class="text-gradient">Walking Tour</span>
+                    </h2>
+
+                    <!-- Description -->
+                    <p style="color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.75; margin-bottom: 32px;">
+                        Follow in Langdon's footsteps through Prague's most mysterious streets. Discover hidden symbols, ancient crypts, and centuries-old secrets — with a local guide who knows every shadow.
+                    </p>
+
+                    <!-- Highlights -->
+                    <ul style="list-style: none; padding: 0; margin: 0 0 36px 0; display: flex; flex-direction: column; gap: 14px;">
+                        <li style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); font-size: 0.95rem;">
+                            <span style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.5); background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="10" height="10" fill="none" stroke="#c9a96e" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            Expert local guide with historical expertise
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); font-size: 0.95rem;">
+                            <span style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.5); background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="10" height="10" fill="none" stroke="#c9a96e" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            12 iconic stops — hidden passages &amp; secret locations
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); font-size: 0.95rem;">
+                            <span style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.5); background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <svg width="10" height="10" fill="none" stroke="#c9a96e" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            </span>
+                            2–3 hours · private group up to 8 people
+                        </li>
+                    </ul>
+
+                    <!-- Price + CTA row -->
+                    <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 12px;">
+                        <div>
+                            <div style="font-size: 2.5rem; font-weight: 800; color: #c9a96e; line-height: 1;">€150</div>
+                            <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-top: 2px;">per group</div>
+                        </div>
+                        <a href="private-tour.html" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 600; white-space: nowrap;">
+                            Book the Tour
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+
+                    <p style="color: rgba(255,255,255,0.25); font-size: 0.75rem;">Free cancellation up to 24h · Secure payment via Stripe</p>
+
                 </div>
             </div>
+
         </section>
+
+        <!-- Mobile: stack layout for small screens -->
+        <style>
+            @media (max-width: 768px) {
+                #services { grid-template-columns: 1fr !important; }
+                #services > div:first-child { min-height: 280px !important; }
+                #services > div:last-child { padding: 2.5rem 1.5rem !important; }
+            }
+        </style>
+
 
         <!-- FAQ Section -->
         <section class="section-padding bg-gradient-to-br from-slate-50 to-white" id="faq">
