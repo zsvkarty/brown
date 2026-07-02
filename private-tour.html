@@ -11,10 +11,10 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="./hero.webp" as="image">
-    <link rel="preload" href="./css/output.css" as="style">
+    <link rel="preload" href="./css/output.css?v=2" as="style">
 
     <!-- Stylesheets -->
-    <link href="./css/output.css" rel="stylesheet">
+    <link href="./css/output.css?v=2" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -22,9 +22,9 @@
 
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <nav class="container-custom" role="navigation" aria-label="Main navigation">
-            <div class="flex items-center justify-between py-3">
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="header">
+        <nav class="navbar-floating scrolled transition-all duration-500" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between py-4 px-8">
                 <!-- Logo/Brand -->
                 <div class="flex items-center">
                     <a href="index.html" class="text-xl font-display font-semibold text-slate-900 hover:text-accent-gold transition-colors">
@@ -34,9 +34,10 @@
 
                 <!-- Navigation Menu -->
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="index.html#services" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">Adventures</a>
-                    <a href="escape-room.html" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">Escape Room</a>
+                    <a href="tour-locations.html" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">Adventures</a>
+                    <a href="index.html#faq" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">FAQ</a>
                     <a href="index.html#contact" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">Contact</a>
+                    <a href="private-tour.html" class="btn-primary text-sm font-semibold px-5 py-2">Book Tour</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -52,11 +53,10 @@
 
             <!-- Mobile Menu -->
             <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-0 pt-2 pb-4 space-y-1 border-t border-slate-200">
-                    <a href="index.html#services"
+                <div class="px-6 pt-2 pb-6 space-y-2 border-t border-white/10">
+                    <a href="tour-locations.html"
                         class="block px-4 py-2 text-slate-700 hover:text-accent-gold hover:bg-slate-50 rounded-lg transition-all duration-200">Adventures</a>
-                    <a href="escape-room.html"
-                        class="block px-4 py-2 text-slate-700 hover:text-accent-gold hover:bg-slate-50 rounded-lg transition-all duration-200">Escape Room</a>
+                    
                     <a href="index.html#contact"
                         class="block px-4 py-2 text-slate-700 hover:text-accent-gold hover:bg-slate-50 rounded-lg transition-all duration-200">Contact</a>
                 </div>
@@ -67,7 +67,7 @@
     <!-- Main Content -->
     <main>
         <!-- Service Header Section -->
-        <section class="pt-24 pb-16 bg-gradient-to-br from-slate-50 to-white">
+        <section class="pb-16 bg-gradient-to-br from-slate-50 to-white" style="padding-top: 11rem;">
             <div class="container-custom">
                 <div class="max-w-6xl mx-auto">
                     <!-- Breadcrumb -->
@@ -75,13 +75,13 @@
                         <ol class="flex items-center space-x-2 text-slate-600">
                             <li><a href="index.html" class="hover:text-accent-gold transition-colors">Home</a></li>
                             <li><span class="mx-2">/</span></li>
-                            <li><a href="index.html#services" class="hover:text-accent-gold transition-colors">Adventures</a></li>
+                            <li><a href="tour-locations.html" class="hover:text-accent-gold transition-colors">Adventures</a></li>
                             <li><span class="mx-2">/</span></li>
                             <li class="text-accent-gold font-medium">Private Tour</li>
                         </ol>
                     </nav>
 
-                    <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
                         <!-- Service Information -->
                         <div class="animate-on-scroll">
                             <div class="mb-6">
@@ -754,7 +754,7 @@
                     <h4 class="text-lg font-semibold text-accent-gold mb-4">Contact Us</h4>
                     <div class="space-y-2 text-text-light/80">
                         <p>Email: info@pragueadventures.com</p>
-                        <p>Phone: +420 123 456 789</p>
+                        <p>Phone: +420 731 023 835</p>
                         <p>Prague, Czech Republic</p>
                     </div>
                 </div>
@@ -772,9 +772,7 @@
                         <a href="private-tour.html"
                             class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">Private
                             Tours</a>
-                        <a href="escape-room.html"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">Escape
-                            Room</a>
+                        
                     </div>
                 </div>
             </div>
