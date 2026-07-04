@@ -5,7 +5,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_F4YVBGauSsAp17ehUK5Y4w_OHF8bYtb';
 
 // Server that holds the Stripe secret key and the service-role Supabase
 // client (the brown-admin-dashboard Next.js app). Change this when deployed.
-const CHECKOUT_API_BASE_URL = 'http://localhost:3000';
+const CHECKOUT_API_BASE_URL = 'https://brown-admin-dashboard-tau.vercel.app/';
 
 const MAX_GROUP_SIZE = 8;
 
