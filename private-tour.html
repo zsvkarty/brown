@@ -203,6 +203,10 @@
                                             <span class="text-slate-600">Available</span>
                                         </div>
                                         <div class="flex items-center gap-1">
+                                            <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+                                            <span class="text-slate-600">Limited</span>
+                                        </div>
+                                        <div class="flex items-center gap-1">
                                             <div class="w-3 h-3 bg-slate-300 rounded-full"></div>
                                             <span class="text-slate-600">Booked</span>
                                         </div>
@@ -701,6 +705,7 @@
                                     <!-- Legend -->
                                     <div class="flex items-center justify-center gap-4 mt-2 text-xs">
                                         <div class="flex items-center gap-1"><div class="w-2.5 h-2.5 bg-accent-gold rounded-full"></div><span class="text-slate-500">Available</span></div>
+                                        <div class="flex items-center gap-1"><div class="w-2.5 h-2.5 bg-amber-500 rounded-full"></div><span class="text-slate-500">Limited</span></div>
                                         <div class="flex items-center gap-1"><div class="w-2.5 h-2.5 bg-slate-300 rounded-full"></div><span class="text-slate-500">Booked</span></div>
                                     </div>
                                 </div>
@@ -867,6 +872,7 @@
     </div>
 
     <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/animations.js"></script>
     <script src="./js/cart.js"></script>
@@ -969,22 +975,33 @@
                     const dateCell = document.createElement('button');
                     const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                     const cellDate = new Date(currentYear, currentMonth, day);
-                    dateCell.textContent = day;
-                    dateCell.className = `${cellSize} text-sm rounded-lg transition-all duration-200 flex items-center justify-center`;
+                    dateCell.className = `${cellSize} relative text-sm rounded-lg transition-all duration-200 flex items-center justify-center`;
 
                     if (cellDate < today.setHours(0, 0, 0, 0)) {
+                        dateCell.textContent = day;
                         dateCell.className += ' text-slate-300 cursor-not-allowed bg-slate-50';
                         dateCell.disabled = true;
                     } else {
                         const timeSlots = ['10:00', '14:00', '16:00', '18:00'];
-                        const hasAvailability = timeSlots.some(t => (dateBookings[`${dateString}-${t}`] || 0) < 8);
+                        // A private tour booking takes the whole slot exclusively
+                        const fullCount = timeSlots.filter((t) => (dateBookings[`${dateString}-${t}`] || 0) > 0).length;
+                        const hasAvailability = fullCount < timeSlots.length;
                         if (!hasAvailability) {
+                            dateCell.textContent = day;
                             dateCell.className += ' text-slate-500 bg-slate-200 cursor-not-allowed';
                             dateCell.disabled = true;
                             dateCell.title = 'Fully booked';
                         } else {
                             dateCell.className += ' text-slate-700 hover:bg-accent-gold hover:text-white cursor-pointer';
                             dateCell.addEventListener('click', () => selectDate(dateString, dateCell));
+                            if (fullCount > 0) {
+                                // Some (not all) time slots are taken - show a dot so it's
+                                // visible without clicking into the date
+                                dateCell.innerHTML = `${day}<span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-amber-500 rounded-full"></span>`;
+                                dateCell.title = `${fullCount} of ${timeSlots.length} times booked`;
+                            } else {
+                                dateCell.textContent = day;
+                            }
                         }
                     }
                     if (selectedDate === dateString) {
@@ -1034,24 +1051,59 @@
             
             // Re-render calendars to sync highlight across both
             renderCalendar();
+            updateTimeSlotAvailability(dateString);
             updateBookingButtons();
+        }
+
+        // Disable individual time slots that are full or blocked for the selected date
+        function updateTimeSlotAvailability(dateString) {
+            const timeSlots = document.querySelectorAll('.time-slot');
+
+            timeSlots.forEach((slot) => {
+                const time = slot.dataset.time;
+                // A private tour booking takes the whole slot exclusively
+                const isFull = (availabilityData[`${dateString}-${time}`] || 0) > 0;
+
+                // Remember the original label so it can be restored once available again
+                if (!slot.dataset.label) {
+                    slot.dataset.label = slot.textContent.trim();
+                }
+
+                slot.disabled = isFull;
+                slot.textContent = isFull ? 'Booked' : slot.dataset.label;
+                slot.classList.toggle('line-through', isFull);
+                slot.classList.toggle('opacity-60', isFull);
+                slot.classList.toggle('cursor-not-allowed', isFull);
+                slot.classList.toggle('bg-slate-100', isFull);
+                slot.classList.toggle('text-slate-400', isFull);
+                slot.title = isFull ? 'This time is fully booked' : '';
+
+                if (isFull && selectedTime === time) {
+                    slot.classList.remove('border-accent-gold', 'bg-accent-gold/10', 'text-accent-gold');
+                    slot.classList.add('border-slate-200');
+                    selectedTime = null;
+                    updateBookingButtons();
+                }
+            });
         }
 
         function initTimeSelection() {
             const timeSlots = document.querySelectorAll('.time-slot');
-            
+
             timeSlots.forEach(slot => {
                 slot.addEventListener('click', function() {
+                    if (this.disabled) return;
+
                     // Remove previous selection
                     timeSlots.forEach(s => {
                         s.classList.remove('border-accent-gold', 'bg-accent-gold/10', 'text-accent-gold');
                         s.classList.add('border-slate-200');
                     });
-                    
+
                     // Add selection to clicked slot
                     this.classList.add('border-accent-gold', 'bg-accent-gold/10', 'text-accent-gold');
                     this.classList.remove('border-slate-200');
-                    
+
                     selectedTime = this.dataset.time;
                     updateBookingButtons();
                 });
@@ -1103,6 +1155,9 @@
         }
 
         function initPrivateTourPage() {
+            // Show a banner if returning from Stripe Checkout
+            initPaymentReturnBanner();
+
             // Initialize calendar
             initCalendar();
             
@@ -1122,7 +1177,7 @@
                     if (selectedDate && selectedTime) {
                         openBookingModal();
                     } else {
-                        alert('Please select a date and time first.');
+                        showBanner('Please select a date and time first.', 'info');
                     }
                 });
             });
@@ -1143,7 +1198,7 @@
                             this.classList.remove('bg-success-green');
                         }, 2000);
                     } else {
-                        alert('Please select a date and time first.');
+                        showBanner('Please select a date and time first.', 'info');
                     }
                 });
             }
@@ -1226,47 +1281,82 @@
             }
         }
 
-        function handleBookingSubmission(e) {
+        async function handleBookingSubmission(e) {
             e.preventDefault();
-            
-            // Validate form
+
             if (!validateBookingForm()) {
                 return;
             }
 
-            // Get form data
+            if (!selectedDate || !selectedTime) {
+                showBanner('Please select a date and time first.', 'info');
+                return;
+            }
+
             const formData = new FormData(e.target);
             const bookingData = {
+                tourId: 'private-tour',
+                date: selectedDate,
+                time: selectedTime,
                 customerName: formData.get('customerName'),
                 email: formData.get('email'),
                 phone: formData.get('phone'),
                 groupSize: formData.get('groupSize'),
                 specialRequests: formData.get('specialRequests'),
-                serviceType: 'private-tour',
-                timestamp: new Date().toISOString()
             };
 
-            // Store booking data
-            localStorage.setItem('pending-booking', JSON.stringify(bookingData));
-
-            // Show loading state
             const submitBtn = document.getElementById('proceed-to-payment-btn');
             const stopLoading = showLoadingSpinner(submitBtn);
 
-            // Simulate processing delay then redirect to Stripe
-            setTimeout(() => {
+            try {
+                const { data: booking, error: bookingError } = await bookingAPI.createBooking(bookingData);
+                if (bookingError) throw new Error(bookingError);
+
+                const baseUrl = window.location.href.split('?')[0];
+                const { data: checkout, error: checkoutError } = await bookingAPI.createCheckoutSession(
+                    booking.id,
+                    `${baseUrl}?payment=success`,
+                    `${baseUrl}?payment=cancelled`
+                );
+                if (checkoutError) throw new Error(checkoutError);
+
+                window.location.href = checkout.url;
+            } catch (error) {
                 stopLoading();
-                
-                // In a real implementation, this would redirect to the actual Stripe Payment Link
-                // For now, we'll simulate the redirect
-                const stripeUrl = `https://buy.stripe.com/private-tour?prefilled_email=${encodeURIComponent(bookingData.email)}`;
-                
-                // Show success message
-                alert('Redirecting to secure payment...\n\nIn a real implementation, you would be redirected to Stripe Payment Links.');
-                
-                // Close modal
-                closeBookingModal();
-            }, 1500);
+                showBanner(`Sorry, something went wrong: ${error.message}`, 'error');
+            }
+        }
+
+        // Non-blocking toast banner (avoids native alert(), which freezes the page
+        // until manually dismissed)
+        function showBanner(message, type = 'info') {
+            const colors = {
+                success: 'bg-success-green',
+                error: 'bg-error-red',
+                info: 'bg-slate-700',
+            };
+            const banner = document.createElement('div');
+            banner.className = `fixed top-20 left-1/2 -translate-x-1/2 z-[60] ${colors[type]} text-white px-6 py-3 rounded-xl shadow-lg max-w-md text-center`;
+            banner.textContent = message;
+            document.body.appendChild(banner);
+            setTimeout(() => banner.remove(), 8000);
+        }
+
+        // Show a banner if returning from Stripe Checkout
+        function initPaymentReturnBanner() {
+            const params = new URLSearchParams(window.location.search);
+            const payment = params.get('payment');
+            if (!payment) return;
+
+            showBanner(
+                payment === 'success'
+                    ? 'Payment received! Your booking is confirmed — check your email shortly.'
+                    : 'Checkout cancelled — your booking was not completed.',
+                payment === 'success' ? 'success' : 'info'
+            );
+
+            // Clean the query string without reloading
+            window.history.replaceState({}, '', window.location.pathname);
         }
 
         function validateBookingForm() {

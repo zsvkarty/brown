@@ -1,185 +1,150 @@
 // Booking API integration with Supabase
-// This file handles all booking-related API calls
 
-// Supabase configuration (you would get these from your Supabase project)
-const SUPABASE_URL = 'https://your-project.supabase.co';
-const SUPABASE_ANON_KEY = 'your-anon-key';
+const SUPABASE_URL = 'https://ewjgrbnhvkyjoohhncmb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_F4YVBGauSsAp17ehUK5Y4w_OHF8bYtb';
 
-// Initialize Supabase client (you would include the Supabase JS library)
-// const { createClient } = supabase;
-// const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Server that holds the Stripe secret key and the service-role Supabase
+// client (the brown-admin-dashboard Next.js app). Change this when deployed.
+const CHECKOUT_API_BASE_URL = 'http://localhost:3000';
 
-// Mock implementation for demonstration
+const MAX_GROUP_SIZE = 8;
+
 class BookingAPI {
     constructor() {
-        this.mockBookings = [
-            { date: '2024-10-30', time: '10:00', groupSize: 6 },
-            { date: '2024-10-31', time: '14:00', groupSize: 8 },
-            { date: '2024-11-05', time: '16:00', groupSize: 4 },
-            { date: '2024-11-12', time: '10:00', groupSize: 8 },
-            { date: '2024-11-19', time: '18:00', groupSize: 5 }
-        ];
+        this.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
-    // Get availability for a specific month
+    // Get availability for a specific month. `month` is 0-indexed (JS Date convention).
+    // Returns entries shaped like { date, time, groupSize }; a blocked slot is
+    // represented as a full slot (groupSize = MAX_GROUP_SIZE) so callers don't
+    // need to special-case it.
     async getAvailability(year, month) {
         try {
-            // In real implementation:
-            // const { data, error } = await supabaseClient
-            //     .from('bookings')
-            //     .select('booking_date, booking_time, group_size')
-            //     .gte('booking_date', `${year}-${month.toString().padStart(2, '0')}-01`)
-            //     .lt('booking_date', `${year}-${(month + 1).toString().padStart(2, '0')}-01`)
-            //     .eq('status', 'confirmed');
+            const { data: bookingRows, error: bookingError } = await this.supabaseClient.rpc(
+                'get_availability',
+                { p_year: year, p_month: month + 1 }
+            );
 
-            // Mock response
-            const startDate = new Date(year, month, 1);
-            const endDate = new Date(year, month + 1, 0);
-            
-            const monthBookings = this.mockBookings.filter(booking => {
-                const bookingDate = new Date(booking.date);
-                return bookingDate >= startDate && bookingDate <= endDate;
-            });
+            if (bookingError) throw bookingError;
 
-            return { data: monthBookings, error: null };
+            const monthStart = `${year}-${String(month + 1).padStart(2, '0')}-01`;
+            const nextMonthDate = new Date(year, month + 1, 1);
+            const monthEnd = `${nextMonthDate.getFullYear()}-${String(nextMonthDate.getMonth() + 1).padStart(2, '0')}-01`;
+
+            const { data: blockedRows, error: blockedError } = await this.supabaseClient
+                .from('blocked_slots')
+                .select('date, time')
+                .eq('status', 'active')
+                .gte('date', monthStart)
+                .lt('date', monthEnd);
+
+            if (blockedError) throw blockedError;
+
+            const availability = [
+                ...(bookingRows || []).map((row) => ({
+                    date: row.booking_date,
+                    time: row.booking_time.substring(0, 5),
+                    groupSize: row.group_size,
+                })),
+                ...(blockedRows || []).map((row) => ({
+                    date: row.date,
+                    time: row.time.substring(0, 5),
+                    groupSize: MAX_GROUP_SIZE,
+                })),
+            ];
+
+            return { data: availability, error: null };
         } catch (error) {
+            console.error('Error fetching availability:', error);
             return { data: null, error: error.message };
         }
     }
 
-    // Check if a specific date/time is available
+    // Check if a specific date/time can fit the requested group size.
     async checkAvailability(date, time, requestedGroupSize = 1) {
         try {
-            // In real implementation:
-            // const { data, error } = await supabaseClient
-            //     .from('bookings')
-            //     .select('group_size')
-            //     .eq('booking_date', date)
-            //     .eq('booking_time', time)
-            //     .eq('status', 'confirmed');
+            const [year, month] = date.split('-').map(Number);
+            const { data: availability, error } = await this.getAvailability(year, month - 1);
+            if (error) throw new Error(error);
 
-            const existingBooking = this.mockBookings.find(
-                booking => booking.date === date && booking.time === time
-            );
-
-            const maxGroupSize = 8; // Private tour max
-            const currentBookedSize = existingBooking ? existingBooking.groupSize : 0;
-            const availableSpots = maxGroupSize - currentBookedSize;
+            // A private tour books out the whole slot exclusively - it isn't
+            // shared capacity between different customers' parties.
+            const isTaken = availability.some((slot) => slot.date === date && slot.time === time);
 
             return {
-                available: availableSpots >= requestedGroupSize,
-                availableSpots,
-                maxGroupSize
+                available: !isTaken && requestedGroupSize <= MAX_GROUP_SIZE,
+                availableSpots: isTaken ? 0 : MAX_GROUP_SIZE,
+                maxGroupSize: MAX_GROUP_SIZE,
             };
         } catch (error) {
             return { available: false, error: error.message };
         }
     }
 
-    // Create a new booking
+    // Create a new booking (starts as 'pending' until payment confirms it).
     async createBooking(bookingData) {
         try {
-            // Validate availability first
             const availability = await this.checkAvailability(
-                bookingData.date, 
-                bookingData.time, 
-                bookingData.groupSize
+                bookingData.date,
+                bookingData.time,
+                Number(bookingData.groupSize)
             );
 
             if (!availability.available) {
                 throw new Error('Selected date/time is no longer available');
             }
 
-            // In real implementation:
-            // const { data, error } = await supabaseClient
-            //     .from('bookings')
-            //     .insert([{
-            //         tour_id: bookingData.tourId,
-            //         booking_date: bookingData.date,
-            //         booking_time: bookingData.time,
-            //         customer_name: bookingData.customerName,
-            //         customer_email: bookingData.email,
-            //         customer_phone: bookingData.phone,
-            //         group_size: bookingData.groupSize,
-            //         special_requests: bookingData.specialRequests,
-            //         status: 'pending'
-            //     }]);
-
-            // Mock successful booking
+            // Generate the id client-side and skip .select() on the insert: the
+            // public "Anyone can create bookings" policy only covers INSERT, and
+            // anon has no SELECT policy on bookings (customer data stays admin-only).
+            // Asking Postgres to return the inserted row would fail RLS on the
+            // implicit read, even though the insert itself is allowed.
             const newBooking = {
-                id: Date.now(),
-                ...bookingData,
+                id: crypto.randomUUID(),
+                tour_id: bookingData.tourId || 'private-tour',
+                booking_date: bookingData.date,
+                booking_time: bookingData.time,
+                customer_name: bookingData.customerName,
+                customer_email: bookingData.email,
+                customer_phone: bookingData.phone || null,
+                group_size: Number(bookingData.groupSize),
+                special_requests: bookingData.specialRequests || null,
                 status: 'pending',
-                createdAt: new Date().toISOString()
             };
 
-            // Add to mock data
-            this.mockBookings.push({
-                date: bookingData.date,
-                time: bookingData.time,
-                groupSize: bookingData.groupSize
-            });
+            const { error } = await this.supabaseClient.from('bookings').insert([newBooking]);
+
+            if (error) throw error;
 
             return { data: newBooking, error: null };
         } catch (error) {
+            console.error('Error creating booking:', error);
             return { data: null, error: error.message };
         }
     }
 
-    // Get booking by ID
-    async getBooking(bookingId) {
+    // Create a Stripe Checkout Session for a pending booking and return its URL.
+    async createCheckoutSession(bookingId, successUrl, cancelUrl) {
         try {
-            // In real implementation:
-            // const { data, error } = await supabaseClient
-            //     .from('bookings')
-            //     .select('*')
-            //     .eq('id', bookingId)
-            //     .single();
+            const response = await fetch(`${CHECKOUT_API_BASE_URL}/api/checkout/create-session`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ bookingId, successUrl, cancelUrl }),
+            });
 
-            // Mock response
-            return { 
-                data: { 
-                    id: bookingId, 
-                    status: 'confirmed',
-                    // ... other booking details
-                }, 
-                error: null 
-            };
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Failed to start checkout');
+
+            return { data: result, error: null };
         } catch (error) {
-            return { data: null, error: error.message };
-        }
-    }
-
-    // Update booking status (for payment confirmation)
-    async updateBookingStatus(bookingId, status) {
-        try {
-            // In real implementation:
-            // const { data, error } = await supabaseClient
-            //     .from('bookings')
-            //     .update({ status })
-            //     .eq('id', bookingId);
-
-            console.log(`Booking ${bookingId} status updated to: ${status}`);
-            return { data: { id: bookingId, status }, error: null };
-        } catch (error) {
-            return { data: null, error: error.message };
-        }
-    }
-
-    // Cancel booking
-    async cancelBooking(bookingId) {
-        try {
-            return await this.updateBookingStatus(bookingId, 'cancelled');
-        } catch (error) {
+            console.error('Error creating checkout session:', error);
             return { data: null, error: error.message };
         }
     }
 }
 
-// Export singleton instance
 const bookingAPI = new BookingAPI();
 
-// Make it available globally
 if (typeof window !== 'undefined') {
     window.bookingAPI = bookingAPI;
 }
