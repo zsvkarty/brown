@@ -45,21 +45,17 @@ serve(async (req) => {
       return new Response(`Webhook Error: ${err.message}`, { status: 400 });
     }
 
-    // We only care about successful checkouts
+    // 1) Handle Successful Checkouts
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
-      
-      // The booking.id from Supabase we passed as client_reference_id
       const bookingId = session.client_reference_id;
       
       if (bookingId) {
-        // Initialize Supabase Admin Client to bypass RLS
         const supabaseAdmin = createClient(
           Deno.env.get("SUPABASE_URL") ?? "",
           Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
         );
 
-        // 1. Update Booking Status in Supabase
         const { data: booking, error: updateError } = await supabaseAdmin
           .from("bookings")
           .update({ status: "confirmed" })
@@ -74,7 +70,6 @@ serve(async (req) => {
 
         console.log(`Successfully confirmed booking: ${bookingId}`);
 
-        // 2. Send Confirmation Email via Resend
         if (booking && booking.customer_email) {
           const emailHtml = `
             <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto;">
@@ -101,7 +96,7 @@ serve(async (req) => {
           `;
 
           const { data, error: emailError } = await resend.emails.send({
-            from: "Prague Mysteries <info@praguetrip.cz>", // IMPORTANT: Change this to your verified Resend domain
+            from: "Prague Mysteries <info@praguetrip.cz>", 
             to: [booking.customer_email],
             subject: "Booking Confirmed: Private Dan Brown Prague Tour",
             html: emailHtml,
@@ -109,11 +104,38 @@ serve(async (req) => {
 
           if (emailError) {
             console.error("Error sending email via Resend:", emailError);
-            // We don't throw here so Stripe still gets a 200 OK (booking is confirmed)
           } else {
             console.log("Email sent successfully via Resend", data);
           }
         }
+      }
+    } 
+    // 2) Handle Expired or Failed Checkouts
+    else if (
+      event.type === "checkout.session.expired" || 
+      event.type === "checkout.session.async_payment_failed"
+    ) {
+      const session = event.data.object;
+      const bookingId = session.client_reference_id;
+
+      if (bookingId) {
+        const supabaseAdmin = createClient(
+          Deno.env.get("SUPABASE_URL") ?? "",
+          Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+        );
+
+        // Mark the booking as cancelled/failed so it frees up the calendar slot
+        const { error: updateError } = await supabaseAdmin
+          .from("bookings")
+          .update({ status: "cancelled" }) // or "failed" if you have that status
+          .eq("id", bookingId);
+
+        if (updateError) {
+          console.error("Error cancelling expired booking:", updateError);
+          throw new Error("Failed to cancel database booking");
+        }
+
+        console.log(`Successfully cancelled expired/failed booking: ${bookingId}`);
       }
     }
 
