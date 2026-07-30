@@ -15,7 +15,7 @@ const services = {
         duration: '2-3 hours',
         maxGroupSize: 8,
         pricingType: 'per-group',
-        stripePaymentLink: 'https://buy.stripe.com/private-tour' // To be configured
+        stripePaymentLink: 'https://buy.stripe.com/8x27sKeQY6ZE6N1dbgcEw00' 
     },
     'escape-room': {
         name: 'Dan Brown Mystery Escape Room',
@@ -23,7 +23,7 @@ const services = {
         duration: '60 minutes',
         maxGroupSize: 6,
         pricingType: 'per-person',
-        stripePaymentLink: 'https://buy.stripe.com/escape-room' // To be configured
+        stripePaymentLink: 'https://buy.stripe.com/YOUR_ESCAPE_ROOM_LINK_HERE'
     }
 };
 
@@ -232,28 +232,35 @@ function prepareCheckoutData() {
     };
 }
 
-// Generate Stripe Payment Link URL with prefilled data
-function generateStripePaymentUrl(customerData = {}) {
-    // In a real implementation, this would generate the appropriate Stripe Payment Link
-    // based on cart contents and customer information
-    
-    if (cart.items.length === 0) {
+// Generate Stripe Payment Link URL with prefilled data & client reference ID
+function generateStripePaymentUrl(serviceTypeOrData = 'private-tour', customerData = {}) {
+    let serviceType = typeof serviceTypeOrData === 'string' ? serviceTypeOrData : 'private-tour';
+    let data = typeof serviceTypeOrData === 'object' ? serviceTypeOrData : customerData;
+
+    if (cart.items.length > 0 && typeof serviceTypeOrData !== 'string') {
+        serviceType = cart.items[0].serviceType;
+    }
+
+    const service = services[serviceType];
+    if (!service || !service.stripePaymentLink) {
         return null;
     }
-    
-    // For now, we'll use the first item's payment link
-    // In a real implementation, you might need to create dynamic payment links
-    // or use Stripe Checkout Sessions API
-    const firstItem = cart.items[0];
-    const service = services[firstItem.serviceType];
-    
+
     let paymentUrl = service.stripePaymentLink;
-    
-    // Add customer email if provided
-    if (customerData.email) {
-        paymentUrl += `?prefilled_email=${encodeURIComponent(customerData.email)}`;
+    const params = new URLSearchParams();
+
+    if (data.email) {
+        params.append('prefilled_email', data.email);
     }
-    
+    if (data.bookingId) {
+        params.append('client_reference_id', data.bookingId);
+    }
+
+    const queryString = params.toString();
+    if (queryString) {
+        paymentUrl += (paymentUrl.includes('?') ? '&' : '?') + queryString;
+    }
+
     return paymentUrl;
 }
 

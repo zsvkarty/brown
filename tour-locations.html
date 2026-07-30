@@ -1135,12 +1135,18 @@
             btn.textContent = 'Processing...';
             btn.disabled = true;
 
-            setTimeout(() => {
-                alert('Redirecting to secure payment...\n\nIn a real implementation, you would be redirected to Stripe Payment Links.');
+            const paymentUrl = typeof generateStripePaymentUrl === 'function' 
+                ? generateStripePaymentUrl('private-tour', { email: email })
+                : null;
+
+            if (paymentUrl && !paymentUrl.includes('https://buy.stripe.com/private-tour')) {
+                window.location.href = paymentUrl;
+            } else {
+                alert('Redirecting to payment page...\n\n(Please configure your live Stripe Payment Link in js/cart.js)');
                 closeLocModal();
                 btn.textContent = 'Proceed to Payment';
                 btn.disabled = false;
-            }, 1500);
+            }
         }
     </script>
 </body>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Booking Confirmation - Private Dan Brown Prague Tour.">
+    <title>Booking Confirmed - Prague Mysteries</title>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./css/output.css?v=2" as="style">
+    <link href="./css/output.css?v=2" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-xl font-display font-semibold text-white hover:text-accent-gold transition-colors">
+                Prague Mysteries
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="tour-locations.html" class="text-slate-300 hover:text-accent-gold transition-colors text-sm font-medium">Adventures</a>
+                <a href="index.html#contact" class="text-slate-300 hover:text-accent-gold transition-colors text-sm font-medium">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center pt-28 pb-16 px-4">
+        <div class="max-w-2xl w-full bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-8 md:p-12 shadow-2xl text-center relative overflow-hidden">
+            <!-- Decorative Gold Glow -->
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Success Icon -->
+            <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30 shadow-lg shadow-emerald-950/50">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <!-- Title -->
+            <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-3 tracking-tight">
+                Payment Confirmed!
+            </h1>
+            <p class="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
+                Thank you for your reservation. Your private Dan Brown Prague adventure is locked in!
+            </p>
+
+            <!-- Booking Summary Details Card -->
+            <div class="bg-slate-900/70 border border-slate-700/80 rounded-2xl p-6 mb-8 text-left space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Status</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        Confirmed & Paid
+                    </span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <span class="text-slate-400 block text-xs">Tour Experience</span>
+                        <strong class="text-white font-medium">Private Dan Brown Prague Tour</strong>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-xs">Meeting Point</span>
+                        <strong class="text-white font-medium">Astronomical Clock (Old Town Sq)</strong>
+                    </div>
+                </div>
+
+                <div class="pt-2 text-xs text-slate-400 leading-relaxed border-t border-slate-800/80">
+                    📧 A receipt and full itinerary details have been sent to your email. If you have any special requests or questions, reply directly to your confirmation email or contact us anytime.
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="tour-locations.html" class="w-full sm:w-auto px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-xl transition-all shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 text-center">
+                    Explore Tour Locations
+                </a>
+                <a href="index.html" class="w-full sm:w-auto px-8 py-3.5 bg-slate-700/80 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-600 transition-all text-center">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-800">
+        &copy; Prague Mysteries. All rights reserved.
+    </footer>
+</body>
+
+</html>
