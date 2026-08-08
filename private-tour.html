@@ -240,7 +240,7 @@
 
                                 <div class="space-y-4">
                                     <button id="book-now-btn" class="btn-primary w-full text-lg font-semibold" disabled>
-                                        Select Date to Book - €150
+                                        Select Date to Book
                                     </button>
                                     <button id="add-to-cart-btn" class="w-full px-6 py-3 border-2 border-slate-300 text-slate-400 rounded-xl font-medium cursor-not-allowed" disabled>
                                         Select Date First
@@ -656,7 +656,7 @@
                                 <!-- Price header -->
                                 <div class="flex items-center justify-between mb-5 pb-4 border-b border-slate-100">
                                     <div>
-                                        <div class="text-4xl font-bold text-accent-gold leading-none">€150</div>
+                                        <div class="text-4xl font-bold text-accent-gold leading-none">From €99</div>
                                         <div class="text-slate-500 text-sm mt-1">per group · up to 8 people</div>
                                     </div>
                                     <div class="text-right">
@@ -857,9 +857,9 @@
                         <div class="bg-slate-50 rounded-xl p-4">
                             <div class="flex justify-between items-center">
                                 <span class="font-semibold text-slate-900">Total Price:</span>
-                                <span class="text-2xl font-bold text-accent-gold">€150</span>
+                                <span id="total-price-value" class="text-2xl font-bold text-accent-gold">€99</span>
                             </div>
-                            <div class="text-sm text-slate-600 mt-1">Per group (up to 8 people)</div>
+                            <div class="text-sm text-slate-600 mt-1">Per group, based on group size</div>
                         </div>
 
                         <button type="submit" id="proceed-to-payment-btn" class="btn-primary w-full">
@@ -885,6 +885,29 @@
         let currentYear = new Date().getFullYear();
         let selectedDate = null;
         let selectedTime = null;
+
+        // Private tour price (EUR) by group size - keep in sync with the
+        // pricing in brown-admin-dashboard/app/api/checkout/create-session.
+        const TOUR_PRICE_BY_GROUP_SIZE = {
+            2: 99,
+            3: 129,
+            4: 155,
+            5: 175,
+            6: 189,
+            7: 199,
+            8: 209,
+        };
+
+        // Update the "Total Price" display in the booking modal to match
+        // the currently selected group size.
+        function updateTotalPrice() {
+            const groupSizeSelect = document.getElementById('group-size');
+            const totalPriceEl = document.getElementById('total-price-value');
+            if (!groupSizeSelect || !totalPriceEl) return;
+
+            const price = TOUR_PRICE_BY_GROUP_SIZE[Number(groupSizeSelect.value)] || TOUR_PRICE_BY_GROUP_SIZE[2];
+            totalPriceEl.textContent = `€${price}`;
+        }
 
         // Availability data - now loaded from API
         let bookedDates = [];
@@ -1118,7 +1141,7 @@
             if (selectedDate && selectedTime) {
                 // Enable top buttons
                 bookNowBtn.disabled = false;
-                bookNowBtn.textContent = 'Book Now - €150';
+                bookNowBtn.textContent = 'Book Now';
                 bookNowBtn.classList.remove('bg-slate-300', 'cursor-not-allowed');
                 bookNowBtn.classList.add('btn-primary');
                 
@@ -1130,7 +1153,7 @@
                 // Enable bottom book button
                 if (bookNowBtn2) {
                     bookNowBtn2.disabled = false;
-                    bookNowBtn2.textContent = 'Book Now — €150';
+                    bookNowBtn2.textContent = 'Book Now';
                     bookNowBtn2.className = 'btn-primary w-full px-4 py-3 rounded-xl font-semibold text-sm';
                 }
             } else {
@@ -1222,6 +1245,13 @@
                 bookingForm.addEventListener('submit', handleBookingSubmission);
             }
 
+            // Keep the total price in sync with the selected group size
+            const groupSizeSelect = document.getElementById('group-size');
+            if (groupSizeSelect) {
+                groupSizeSelect.addEventListener('change', updateTotalPrice);
+                updateTotalPrice();
+            }
+
             // Escape key to close modal
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
@@ -1233,6 +1263,8 @@
         function openBookingModal() {
             const modal = document.getElementById('booking-modal');
             if (modal) {
+                updateTotalPrice();
+
                 // Update booking modal with selected date and time
                 if (selectedDate && selectedTime) {
                     const bookingDateElement = document.getElementById('booking-selected-date');
