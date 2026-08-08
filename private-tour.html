@@ -886,6 +886,26 @@
         let selectedDate = null;
         let selectedTime = null;
 
+        // TEMPORARY soft-lock while Stripe checkout runs in sandbox mode -
+        // stops casual visitors from starting a "real-looking" booking that
+        // won't actually charge anything. This is a client-side check only
+        // (visible in page source), not real security - remove once the
+        // site is confirmed on live Stripe keys.
+        const BOOKING_UNLOCK_PASSWORD = 'brownpassword';
+        let bookingUnlocked = false;
+
+        function checkBookingPassword() {
+            if (bookingUnlocked) return true;
+            const input = prompt('This tour is still in testing. Enter the password to continue booking:');
+            if (input === null) return false;
+            if (input === BOOKING_UNLOCK_PASSWORD) {
+                bookingUnlocked = true;
+                return true;
+            }
+            alert('Incorrect password.');
+            return false;
+        }
+
         // Private tour price (EUR) by group size - keep in sync with the
         // pricing in brown-admin-dashboard/app/api/checkout/create-session.
         const TOUR_PRICE_BY_GROUP_SIZE = {
@@ -1197,6 +1217,7 @@
             // Book now button handlers
             bookNowBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
+                    if (!checkBookingPassword()) return;
                     if (selectedDate && selectedTime) {
                         openBookingModal();
                     } else {
