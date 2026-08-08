@@ -1344,17 +1344,9 @@
                 const { data: booking, error: bookingError } = await bookingAPI.createBooking(bookingData);
                 if (bookingError) throw new Error(bookingError);
 
-                // Check for configured Stripe Payment Link first
-                const paymentUrl = typeof generateStripePaymentUrl === 'function'
-                    ? generateStripePaymentUrl('private-tour', { email: bookingData.email, bookingId: booking.id })
-                    : null;
-
-                if (paymentUrl && !paymentUrl.includes('https://buy.stripe.com/private-tour')) {
-                    window.location.href = paymentUrl;
-                    return;
-                }
-
-                // Fallback to API Checkout Session
+                // Always go through our own Checkout Session backend, not the
+                // flat-price Stripe Payment Link in js/cart.js - only this
+                // path can price the session by the selected group size.
                 const baseUrl = window.location.href.split('?')[0];
                 const { data: checkout, error: checkoutError } = await bookingAPI.createCheckoutSession(
                     booking.id,

@@ -120,7 +120,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                €150 per group
+                                From €99 per group
                             </div>
                         </div>
                     </div>
@@ -778,7 +778,7 @@
                                 <div class="space-y-3">
                                     <button id="book-now-btn-loc" class="btn-primary w-full text-lg font-semibold"
                                         disabled>
-                                        Select Date to Book — €150
+                                        Select Date to Book
                                     </button>
                                 </div>
 
@@ -902,9 +902,9 @@
                         <div class="bg-slate-50 rounded-xl p-4">
                             <div class="flex justify-between items-center">
                                 <span class="font-semibold text-slate-900">Total Price:</span>
-                                <span class="text-2xl font-bold text-accent-gold">€150</span>
+                                <span id="loc-total-price-value" class="text-2xl font-bold text-accent-gold">€99</span>
                             </div>
-                            <div class="text-sm text-slate-600 mt-1">Per group (up to 8 people)</div>
+                            <div class="text-sm text-slate-600 mt-1">Per group, based on group size</div>
                         </div>
                         <button type="submit" id="loc-proceed-btn" class="btn-primary w-full">Proceed to
                             Payment</button>
@@ -925,6 +925,28 @@
         let locYear = new Date().getFullYear();
         let locSelectedDate = null;
         let locSelectedTime = null;
+
+        // Private tour price (EUR) by group size - keep in sync with the
+        // pricing in brown-admin-dashboard/app/api/checkout/create-session
+        // and with private-tour.html.
+        const LOC_TOUR_PRICE_BY_GROUP_SIZE = {
+            2: 99,
+            3: 129,
+            4: 155,
+            5: 175,
+            6: 189,
+            7: 199,
+            8: 209,
+        };
+
+        function updateLocTotalPrice() {
+            const groupSizeSelect = document.getElementById('loc-group-size');
+            const totalPriceEl = document.getElementById('loc-total-price-value');
+            if (!groupSizeSelect || !totalPriceEl) return;
+
+            const price = LOC_TOUR_PRICE_BY_GROUP_SIZE[Number(groupSizeSelect.value)] || LOC_TOUR_PRICE_BY_GROUP_SIZE[2];
+            totalPriceEl.textContent = `€${price}`;
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
             initLocCalendar();
@@ -1035,11 +1057,11 @@
             const btn = document.getElementById('book-now-btn-loc');
             if (locSelectedDate && locSelectedTime) {
                 btn.disabled = false;
-                btn.textContent = 'Book Now — €150';
+                btn.textContent = 'Book Now';
                 btn.onclick = () => openLocModal();
             } else {
                 btn.disabled = true;
-                btn.textContent = 'Select Date & Time to Book — €150';
+                btn.textContent = 'Select Date & Time to Book';
                 btn.onclick = null;
             }
         }
@@ -1056,11 +1078,19 @@
             document.addEventListener('keydown', e => {
                 if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) closeLocModal();
             });
+
+            const groupSizeSelect = document.getElementById('loc-group-size');
+            if (groupSizeSelect) {
+                groupSizeSelect.addEventListener('change', updateLocTotalPrice);
+                updateLocTotalPrice();
+            }
         }
 
         function openLocModal() {
             const modal = document.getElementById('loc-booking-modal');
             if (!modal) return;
+
+            updateLocTotalPrice();
 
             const formatted = new Date(locSelectedDate + 'T12:00:00').toLocaleDateString('en-US', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
@@ -1086,10 +1116,13 @@
             }
         }
 
-        function handleLocBookingSubmit(e) {
+        async function handleLocBookingSubmit(e) {
             e.preventDefault();
             const name = document.getElementById('loc-customer-name').value.trim();
             const email = document.getElementById('loc-customer-email').value.trim();
+            const phone = document.getElementById('loc-customer-phone').value.trim();
+            const groupSize = document.getElementById('loc-group-size').value;
+            const specialRequests = document.getElementById('loc-special-requests').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             let valid = true;
 
@@ -1098,22 +1131,43 @@
 
             if (!name) { document.getElementById('loc-name-error').classList.remove('hidden'); valid = false; }
             if (!email || !emailRegex.test(email)) { document.getElementById('loc-email-error').classList.remove('hidden'); valid = false; }
+            if (!locSelectedDate || !locSelectedTime) { valid = false; alert('Please select a date and time first.'); }
             if (!valid) return;
 
             const btn = document.getElementById('loc-proceed-btn');
+            const originalBtnText = btn.textContent;
             btn.textContent = 'Processing...';
             btn.disabled = true;
 
-            const paymentUrl = typeof generateStripePaymentUrl === 'function'
-                ? generateStripePaymentUrl('private-tour', { email: email })
-                : null;
+            try {
+                // Create the booking (with the real group size) and get a
+                // Stripe Checkout Session priced for that group size - same
+                // path as private-tour.html. Do NOT use the flat-price
+                // Payment Link in js/cart.js; it can't reflect group size.
+                const { data: booking, error: bookingError } = await bookingAPI.createBooking({
+                    tourId: 'private-tour',
+                    date: locSelectedDate,
+                    time: locSelectedTime,
+                    customerName: name,
+                    email,
+                    phone,
+                    groupSize,
+                    specialRequests,
+                });
+                if (bookingError) throw new Error(bookingError);
 
-            if (paymentUrl && !paymentUrl.includes('https://buy.stripe.com/private-tour')) {
-                window.location.href = paymentUrl;
-            } else {
-                alert('Redirecting to payment page...\n\n(Please configure your live Stripe Payment Link in js/cart.js)');
-                closeLocModal();
-                btn.textContent = 'Proceed to Payment';
+                const baseUrl = window.location.href.split('?')[0];
+                const { data: checkout, error: checkoutError } = await bookingAPI.createCheckoutSession(
+                    booking.id,
+                    `${baseUrl}?payment=success`,
+                    `${baseUrl}?payment=cancelled`
+                );
+                if (checkoutError) throw new Error(checkoutError);
+
+                window.location.href = checkout.url;
+            } catch (error) {
+                alert(`Sorry, something went wrong: ${error.message}`);
+                btn.textContent = originalBtnText;
                 btn.disabled = false;
             }
         }
