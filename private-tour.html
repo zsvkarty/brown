@@ -862,6 +862,14 @@
                             <div class="text-sm text-slate-600 mt-1">Per group, based on group size</div>
                         </div>
 
+                        <div>
+                            <label class="flex items-start gap-3 text-sm text-slate-700 cursor-pointer">
+                                <input type="checkbox" id="terms-agree" class="mt-0.5 h-4 w-4 rounded border-slate-300 accent-amber-500">
+                                <span>I agree to the <a href="terms.html" target="_blank" rel="noopener" class="text-accent-gold underline hover:no-underline">Terms &amp; Conditions</a></span>
+                            </label>
+                            <div id="terms-error" class="error-message hidden">Please agree to the Terms &amp; Conditions to continue</div>
+                        </div>
+
                         <button type="submit" id="proceed-to-payment-btn" class="btn-primary w-full">
                             Proceed to Payment
                         </button>
@@ -1371,7 +1379,7 @@
                 const baseUrl = window.location.href.split('?')[0];
                 const { data: checkout, error: checkoutError } = await bookingAPI.createCheckoutSession(
                     booking.id,
-                    new URL('confirmation.html', window.location.href).href,
+                    bookingAPI.buildConfirmationUrl(booking),
                     `${baseUrl}?payment=cancelled`
                 );
                 if (checkoutError) throw new Error(checkoutError);
@@ -1433,6 +1441,11 @@
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email || !emailRegex.test(email)) {
                 showFieldError('email-error', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            if (!document.getElementById('terms-agree').checked) {
+                showFieldError('terms-error', 'Please agree to the Terms & Conditions to continue');
                 isValid = false;
             }
 

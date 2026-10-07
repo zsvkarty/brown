@@ -123,6 +123,18 @@ class BookingAPI {
         }
     }
 
+    // URL of confirmation.html carrying the booking details it displays.
+    // Display only - the real confirmation is the webhook marking the booking paid.
+    buildConfirmationUrl(booking) {
+        const url = new URL('confirmation.html', window.location.href);
+        url.search = new URLSearchParams({
+            date: booking.booking_date,
+            time: booking.booking_time,
+            group: booking.group_size,
+        }).toString();
+        return url.href;
+    }
+
     // Create a Stripe Checkout Session for a pending booking and return its URL.
     async createCheckoutSession(bookingId, successUrl, cancelUrl) {
         try {
