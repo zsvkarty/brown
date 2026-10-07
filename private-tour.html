@@ -1371,7 +1371,7 @@
                 const baseUrl = window.location.href.split('?')[0];
                 const { data: checkout, error: checkoutError } = await bookingAPI.createCheckoutSession(
                     booking.id,
-                    `${baseUrl}?payment=success`,
+                    new URL('confirmation.html', window.location.href).href,
                     `${baseUrl}?payment=cancelled`
                 );
                 if (checkoutError) throw new Error(checkoutError);
