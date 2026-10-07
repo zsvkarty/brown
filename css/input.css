@@ -523,20 +523,32 @@ footer[id] {
   color: var(--paper);
 }
 
-.btn-ink:hover,
 .btn-ink:focus-visible {
   background: transparent;
   color: var(--ink);
+}
+
+@media (hover: hover) {
+  .btn-ink:hover:not(:disabled) {
+    background: transparent;
+    color: var(--ink);
+  }
 }
 
 .btn-ink-outline {
   color: var(--ink);
 }
 
-.btn-ink-outline:hover,
 .btn-ink-outline:focus-visible {
   background: var(--ink);
   color: var(--paper);
+}
+
+@media (hover: hover) {
+  .btn-ink-outline:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
 }
 
 .hero__meta {
@@ -1489,4 +1501,814 @@ footer[id] {
 .stop-card--more a:hover .stop-card__more-link,
 .stop-card--more a:focus-visible .stop-card__more-link {
   background-size: 0 1px;
+}
+
+/* ------------------------------------------------------------------
+   Booking page: step bar, one question per step, live summary on the
+   side (desktop) and a fixed Previous / Next bar (js/booking-flow.js).
+   ------------------------------------------------------------------ */
+.book {
+  --gold: #d2b273;
+  --line: rgba(21, 20, 15, 0.2);
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  /* clears the logo block, which hangs below the header bar */
+  padding: calc(var(--brand-h) + 20px) 0 140px;
+}
+
+.book__banner {
+  display: none;
+}
+
+/* grid children default to min-width: auto; let the step column shrink on narrow phones */
+.book__main {
+  min-width: 0;
+}
+
+.book__wrap {
+  padding: 0 24px;
+  display: grid;
+  gap: 48px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* Step bar */
+.book__stepbar {
+  display: flex;
+  list-style: none;
+  margin: 0 0 40px;
+  padding: 0;
+  border: 1px solid var(--ink);
+}
+
+.book__stepbar li {
+  flex: 0 0 auto;
+  border-left: 1px solid var(--ink);
+}
+
+.book__stepbar li:first-child {
+  border-left: 0;
+}
+
+.book__stepbar button {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  min-width: 48px;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.book__stepbar button:disabled {
+  cursor: default;
+}
+
+.book__stepbar .book__steplabel {
+  display: none;
+}
+
+.book__stepbar li.is-done,
+.book__stepbar li.is-current {
+  background: var(--gold);
+}
+
+.book__stepbar li.is-done button:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.book__stepbar li.is-current {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 500;
+}
+
+.book__stepbar li.is-current button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book__stepbar li.is-current .book__steplabel {
+  display: inline;
+}
+
+.book__stepbar li:not(.is-done):not(.is-current) button {
+  color: rgba(21, 20, 15, 0.55);
+}
+
+/* Steps */
+.book__title {
+  font-family: 'Eczar', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+
+.book__title:focus {
+  outline: none;
+}
+
+.book__intro {
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 0 32px;
+  max-width: 36rem;
+}
+
+.book__label {
+  font-family: 'Eczar', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+
+.book__notice {
+  border: 1px solid var(--ink);
+  padding: 14px 16px;
+  margin: 0 0 32px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* Group size */
+.book__groups {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 359px) {
+  .book__groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.book__group,
+.book__time,
+.cal__day {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.book__group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 14px 12px;
+  text-align: left;
+}
+
+.book__group-num {
+  font-family: 'Eczar', Georgia, serif;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.book__group-meta,
+.book__group-price {
+  font-size: 13px;
+  line-height: 1.3;
+  color: rgba(21, 20, 15, 0.7);
+}
+
+.book__group-price {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.book__group:hover,
+.book__time:hover:not(:disabled),
+.cal__day:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.book__group.is-selected,
+.book__time.is-selected,
+.cal__day.is-selected {
+  background: var(--gold);
+  border-color: var(--ink);
+}
+
+.book__group.is-selected .book__group-meta {
+  color: var(--ink);
+}
+
+/* Calendar */
+.cal {
+  border: 1px solid var(--ink);
+}
+
+.cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ink);
+  background: var(--gold);
+}
+
+.cal__head h3 {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.cal__nav {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.cal__nav:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.cal__weekdays,
+.cal__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding: 0 8px;
+}
+
+.cal__weekdays {
+  padding-top: 12px;
+  padding-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.cal__days {
+  padding-bottom: 8px;
+}
+
+.cal__day {
+  aspect-ratio: 1;
+  max-height: 56px;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  border-color: transparent;
+}
+
+.cal__day:disabled {
+  color: rgba(21, 20, 15, 0.3);
+  cursor: default;
+}
+
+.cal__day.is-full {
+  text-decoration: line-through;
+}
+
+.cal__status {
+  font-size: 14px;
+  margin: 12px 0 0;
+  min-height: 1.4em;
+}
+
+.cal__days[aria-busy="true"] {
+  opacity: 0.4;
+}
+
+/* Times */
+.book__times-hint {
+  font-size: 15px;
+  color: rgba(21, 20, 15, 0.7);
+  margin: 32px 0 0;
+}
+
+.book__times {
+  margin-top: 36px;
+}
+
+.book__times-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.book__time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 14px 8px;
+}
+
+.book__time strong {
+  font-size: 20px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.book__time-state {
+  font-size: 13px;
+  color: rgba(21, 20, 15, 0.7);
+}
+
+.book__time:disabled {
+  border-style: dashed;
+  color: rgba(21, 20, 15, 0.35);
+  cursor: default;
+}
+
+/* Details form */
+.book__fields {
+  display: grid;
+  gap: 22px;
+  max-width: 36rem;
+}
+
+.book__field label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.book__field label span {
+  font-weight: 400;
+  color: rgba(21, 20, 15, 0.6);
+}
+
+.book__field input,
+.book__field textarea {
+  width: 100%;
+  border: 1px solid var(--ink);
+  background: #fbf9f3;
+  padding: 14px;
+  font-size: 16px;
+  color: var(--ink);
+  border-radius: 0;
+}
+
+.book__field input:focus,
+.book__field textarea:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 0;
+}
+
+.book__field [aria-invalid="true"] {
+  border-color: #b4412c;
+}
+
+.book__err {
+  font-size: 14px;
+  color: #b4412c;
+  margin: 8px 0 0;
+}
+
+/* Review */
+.book__review {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  margin-bottom: 28px;
+}
+
+.book__review th,
+.book__review td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-weight: 400;
+}
+
+.book__review th {
+  width: 38%;
+  color: rgba(21, 20, 15, 0.7);
+  padding-right: 16px;
+}
+
+.book__review td {
+  overflow-wrap: anywhere;
+}
+
+.book__review .book__review-group th {
+  color: var(--ink);
+  font-weight: 600;
+  padding-top: 28px;
+}
+
+.book__review .book__review-group td {
+  padding-top: 28px;
+  text-align: right;
+}
+
+.book__review-total th,
+.book__review-total td {
+  border-top: 2px solid var(--ink);
+  border-bottom: 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.book__review-total td {
+  text-align: right;
+}
+
+.book__edit {
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.book__terms {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.book__terms input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--ink);
+  flex-shrink: 0;
+}
+
+.book__terms a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.book__small {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(21, 20, 15, 0.7);
+  margin: 16px 0 0;
+}
+
+.book__error {
+  border: 1px solid #b4412c;
+  color: #b4412c;
+  padding: 14px 16px;
+  margin-top: 24px;
+  font-size: 15px;
+}
+
+/* Side summary (desktop) */
+.book__summary {
+  display: none;
+}
+
+.book__sum-box {
+  background: var(--gold);
+  padding: 28px;
+}
+
+.book__sum-box h2 {
+  font-family: 'Eczar', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.book__sum-box > p {
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.book__sum-box dl {
+  margin: 0;
+}
+
+.book__sum-box dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(21, 20, 15, 0.25);
+  font-size: 15px;
+}
+
+.book__sum-box dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 500;
+}
+
+.book__sum-box dd.is-empty {
+  font-weight: 400;
+  opacity: 0.55;
+}
+
+.book__sum-box .book__sum-total {
+  border-top: 2px solid var(--ink);
+  font-size: 18px;
+}
+
+.book__sum-notes {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.book__sum-notes a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Fixed bottom bar */
+.book__bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  background: var(--paper);
+  border-top: 1px solid var(--ink);
+  padding: 12px 24px calc(12px + env(safe-area-inset-bottom));
+}
+
+.book__bar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.book__mini {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: center;
+  margin: 0;
+}
+
+.book__mini span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book__mini span:first-child {
+  font-weight: 600;
+}
+
+.book__bar .btn-ink,
+.book__bar .btn-ink-outline {
+  height: 50px;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+
+.book__bar .btn-ink:disabled {
+  background: rgba(21, 20, 15, 0.3);
+  border-color: transparent;
+  color: var(--paper);
+  cursor: not-allowed;
+}
+
+@media (min-width: 640px) {
+  .book__groups {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .book__times-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .book {
+    padding-top: var(--header-h);
+  }
+
+  .book__banner {
+    display: block;
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 56px;
+  }
+
+  .book__banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Prague Castle and St Vitus at dusk, from Pexels (kennymax) */
+    object-position: center 40%;
+  }
+
+  .book__wrap {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 72px;
+    padding: 0 40px;
+  }
+
+  .book__stepbar li.is-next {
+    flex: 1 1 auto;
+  }
+
+  .book__stepbar li.is-next .book__steplabel {
+    display: inline;
+  }
+
+  .book__summary {
+    display: block;
+    align-self: start;
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+
+  .book__mini {
+    visibility: hidden;
+  }
+
+  .book__bar {
+    padding: 14px 0;
+  }
+
+  .book__bar-inner {
+    /* line the buttons up with the main column, not the summary */
+    padding: 0 calc(40px + 340px + 72px) 0 40px;
+  }
+
+  .book__bar .btn-ink,
+  .book__bar .btn-ink-outline {
+    height: 54px;
+    padding: 0 28px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Confirmation + simple text pages (terms).
+   ------------------------------------------------------------------ */
+.conf,
+.legal {
+  background: var(--paper);
+  color: var(--ink);
+  padding: calc(var(--brand-h) + 40px) 24px 96px;
+}
+
+.conf__grid {
+  display: grid;
+  gap: 40px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.conf__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  margin: 0 0 16px;
+}
+
+.conf__eyebrow::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: var(--ink);
+}
+
+.conf__title,
+.legal__title {
+  font-family: 'Eczar', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.6rem, 8vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 22px;
+  max-width: 14ch;
+}
+
+.conf__lede {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 34rem;
+  margin: 0 0 32px;
+}
+
+.conf__notice {
+  border-top: 1px solid rgba(21, 20, 15, 0.2);
+  padding-top: 20px;
+  margin: 0 0 32px;
+  max-width: 34rem;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.conf__notice p {
+  margin: 0 0 12px;
+}
+
+.conf__notice p:last-child {
+  margin-bottom: 0;
+}
+
+.conf__notice strong {
+  font-weight: 600;
+}
+
+.conf__notice a,
+.legal a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.conf__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.conf__panel {
+  background: #d2b273;
+  padding: 28px 24px;
+  align-self: start;
+}
+
+.conf__panel h2 {
+  font-family: 'Eczar', Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  margin: 0 0 18px;
+}
+
+.conf__panel dl {
+  margin: 0;
+}
+
+.conf__panel dl div {
+  padding: 12px 0;
+  border-top: 1px solid rgba(21, 20, 15, 0.25);
+}
+
+.conf__panel dt {
+  font-size: 13px;
+  margin-bottom: 2px;
+  opacity: 0.75;
+}
+
+.conf__panel dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.conf__status {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 14px;
+  border: 1px solid var(--ink);
+  padding: 6px 10px;
+}
+
+.legal__body {
+  max-width: 40rem;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.legal__body p {
+  margin: 0 0 18px;
+}
+
+@media (min-width: 960px) {
+  .conf,
+  .legal {
+    padding: calc(var(--brand-h) + 72px) 40px 136px;
+  }
+
+  .conf__grid {
+    grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+    gap: 80px;
+  }
+
+  .conf__panel {
+    padding: 36px;
+  }
+
+  .legal__inner {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
 }

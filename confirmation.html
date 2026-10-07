@@ -4,121 +4,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Booking Confirmation - Private Dan Brown Prague Tour.">
+    <meta name="description" content="Booking confirmation - Private Dan Brown Prague Tour.">
     <meta name="robots" content="noindex">
     <title>Booking Confirmed | Prague Trip</title>
-
-    <!-- Preload critical resources -->
-    <link rel="preload" href="./css/output.css?v=15" as="style">
-    <link href="./css/output.css?v=15" rel="stylesheet">
+    <link href="./css/output.css?v=22" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
+<body>
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
-        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="index.html" class="text-xl font-display font-semibold text-white hover:text-accent-gold transition-colors">
-                Prague Trip
-            </a>
-            <div class="flex items-center space-x-6">
-                <a href="tour-locations.html" class="text-slate-300 hover:text-accent-gold transition-colors text-sm font-medium">Locations</a>
-                <a href="index.html#contact" class="text-slate-300 hover:text-accent-gold transition-colors text-sm font-medium">Contact</a>
-            </div>
-        </nav>
+    <header class="site-header" id="site-header">
+        <div class="site-header__bar">
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu"
+                aria-expanded="false" aria-controls="site-menu">
+                <span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+            </button>
+
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="index.html#services" class="site-nav__link">The Tour</a>
+                <a href="tour-locations.html" class="site-nav__link">Locations</a>
+                <a href="index.html#faq" class="site-nav__link">FAQ</a>
+                <a href="#contact" class="site-nav__link">Contact</a>
+            </nav>
+
+            <a href="private-tour.html" class="header-cta">Book a tour</a>
+        </div>
+
+        <a href="index.html" class="brand-block" aria-label="Prague Trip, home">
+            <span class="brand-block__name">Prague<br>Trip</span>
+            <span class="brand-block__tag">Dan Brown Tours</span>
+        </a>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow flex items-center justify-center pt-28 pb-16 px-4">
-        <div class="max-w-2xl w-full bg-slate-800/80 backdrop-blur-xl border border-slate-700/60 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            <!-- Decorative glow -->
-            <div class="absolute -top-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Mobile menu (grows out of the menu button, see .site-menu in css/input.css) -->
+    <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" inert>
+        <div class="site-menu__top">
+            <button type="button" class="site-menu__close" id="menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5" aria-hidden="true">
+                    <path d="M4 4l16 16M20 4L4 20" />
+                </svg>
+            </button>
+        </div>
 
-            <!-- Heading -->
-            <div class="relative text-center">
-                <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <p class="text-xs font-semibold uppercase tracking-widest text-accent-gold mb-3">Booking confirmed</p>
-                <h1 class="text-3xl md:text-4xl font-display font-bold text-white mb-3 tracking-tight">
-                    Thank you, your tour is booked
-                </h1>
-                <p class="text-slate-300 mb-8 max-w-md mx-auto">
-                    Your payment went through and your private Dan Brown Prague adventure is reserved.
-                </p>
-            </div>
+        <p class="site-menu__title">Menu</p>
 
-            <!-- Booking details -->
-            <div class="relative bg-slate-900/70 border border-slate-700/80 rounded-2xl p-6 mb-6">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Your booking</span>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                        Confirmed &amp; paid
-                    </span>
-                </div>
+        <nav class="site-menu__links" aria-label="Mobile navigation">
+            <a href="index.html" style="--i: 0">Home</a>
+            <a href="index.html#services" style="--i: 1">The Tour</a>
+            <a href="tour-locations.html" style="--i: 2">Locations</a>
+            <a href="index.html#faq" style="--i: 3">FAQ</a>
+            <a href="#contact" style="--i: 4">Contact</a>
+        </nav>
 
-                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 text-sm">
-                    <div class="sm:col-span-2">
-                        <dt class="text-slate-400 text-xs mb-1">Tour</dt>
-                        <dd class="text-white font-medium">Private Dan Brown Prague Tour</dd>
-                    </div>
-                    <div id="detail-date" class="hidden">
-                        <dt class="text-slate-400 text-xs mb-1">Date</dt>
-                        <dd class="text-white font-medium" data-value></dd>
-                    </div>
-                    <div id="detail-time" class="hidden">
-                        <dt class="text-slate-400 text-xs mb-1">Start time</dt>
-                        <dd class="text-white font-medium" data-value></dd>
-                    </div>
-                    <div id="detail-group" class="hidden">
-                        <dt class="text-slate-400 text-xs mb-1">Group size</dt>
-                        <dd class="text-white font-medium" data-value></dd>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <dt class="text-slate-400 text-xs mb-1">Meeting point</dt>
-                        <dd class="text-white font-medium">Astronomical Clock (Orloj), Old Town Square</dd>
-                    </div>
-                </dl>
-            </div>
-
-            <!-- Email notice -->
-            <div class="relative bg-amber-500/10 border border-amber-500/30 rounded-2xl p-5 mb-6 text-sm leading-relaxed">
-                <p class="text-amber-100 font-medium mb-1">Check your inbox</p>
-                <p class="text-slate-300">
-                    We have sent a confirmation email with your booking details. It usually arrives within a few minutes.
-                    If you don't see it, please <strong class="text-white">check your spam or junk folder</strong>,
-                    and mark it as "not spam" so you receive any updates.
-                </p>
-            </div>
-
-            <!-- Contact -->
-            <p class="relative text-center text-sm text-slate-400 mb-8">
-                Nothing in your inbox or spam, or have a question about your booking?
-                Write to us at
-                <a href="mailto:info@praguetrip.cz" class="text-accent-gold hover:underline font-medium">info@praguetrip.cz</a>
-                and we will get back to you.
-            </p>
-
-            <!-- Actions -->
-            <div class="relative flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="index.html" class="w-full sm:w-auto px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-xl transition-all shadow-lg shadow-amber-500/20 text-center">
-                    Back to Home
-                </a>
-                <a href="tour-locations.html" class="w-full sm:w-auto px-8 py-3.5 bg-slate-700/80 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-600 transition-all text-center">
-                    Explore Tour Locations
-                </a>
+        <div class="site-menu__footer" style="--i: 6">
+            <a href="private-tour.html" class="site-menu__cta">Book a tour</a>
+            <div>
+                <a href="tel:+420731023835">+420 731 023 835</a>
             </div>
         </div>
+    </div>
+
+    <main>
+        <section class="conf">
+            <div class="conf__grid">
+                <div>
+                    <p class="conf__eyebrow">Booking confirmed</p>
+                    <h1 class="conf__title">Thank you, see you in Prague</h1>
+                    <p class="conf__lede">Your payment went through and your private Dan Brown tour is booked.
+                        Your guide will meet you at the Astronomical Clock.</p>
+
+                    <div class="conf__notice">
+                        <p>We&rsquo;ve emailed your confirmation. It usually arrives within a few minutes. If you
+                            can&rsquo;t find it, please <strong>check your spam or junk folder</strong> and mark it
+                            as &ldquo;not spam&rdquo;.</p>
+                        <p>Nothing there, or a question about your booking? Write to
+                            <a href="mailto:info@praguetrip.cz">info@praguetrip.cz</a>.</p>
+                    </div>
+
+                    <div class="conf__actions">
+                        <a href="tour-locations.html" class="btn-ink">Preview the route</a>
+                        <a href="index.html" class="btn-ink-outline">Back to home</a>
+                    </div>
+                </div>
+
+                <aside class="conf__panel" aria-label="Your booking">
+                    <h2>Your booking</h2>
+                    <dl>
+                        <div><dt>Tour</dt><dd>Private Dan Brown walking tour</dd></div>
+                        <div id="detail-date" hidden><dt>Date</dt><dd data-value></dd></div>
+                        <div id="detail-time" hidden><dt>Start time</dt><dd data-value></dd></div>
+                        <div id="detail-group" hidden><dt>Group</dt><dd data-value></dd></div>
+                        <div><dt>Meeting point</dt><dd>Astronomical Clock (Orloj), Old Town Square</dd></div>
+                    </dl>
+                    <span class="conf__status">Paid &amp; confirmed</span>
+                </aside>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-800">
-        &copy; 2026 Prague Trip. All rights reserved.
+    <footer class="site-footer" id="contact">
+        <div class="site-footer__cta">
+            <p class="site-footer__cta-title">Walk the novel with us.</p>
+            <a href="private-tour.html" class="btn-paper">Book a tour</a>
+        </div>
+
+        <div class="site-footer__cols">
+            <div class="site-footer__brand">
+                <p class="site-footer__name">Prague Trip</p>
+                <p class="site-footer__about">Private Dan Brown walking tours through the Prague of
+                    <em>The Secret of Secrets</em>, with a local guide.</p>
+            </div>
+
+            <div>
+                <h2 class="site-footer__heading">Contact</h2>
+                <ul class="site-footer__list">
+                    <li><a href="mailto:info@praguetrip.cz">info@praguetrip.cz</a></li>
+                    <li><a href="tel:+420731023835">+420 731 023 835</a></li>
+                    <li>Prague, Czech Republic</li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="site-footer__heading">Tour</h2>
+                <ul class="site-footer__list">
+                    <li><a href="index.html#services">The Tour</a></li>
+                    <li><a href="tour-locations.html">Locations</a></li>
+                    <li><a href="index.html#faq">FAQ</a></li>
+                    <li><a href="private-tour.html">Book a tour</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="site-footer__heading">Legal</h2>
+                <ul class="site-footer__list">
+                    <li><a href="terms.html">Terms &amp; Conditions</a></li>
+                    <!-- Privacy Policy: link privacy.html here once the page exists -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="site-footer__bottom">
+            <p>&copy; 2026 Prague Trip</p>
+        </div>
     </footer>
 
+    <script src="./js/main.js?v=9"></script>
     <script>
         // Booking details arrive in the URL from the booking page. Anything
         // missing or malformed simply stays hidden.
@@ -129,7 +160,7 @@
                 if (!text) return;
                 const row = document.getElementById(id);
                 row.querySelector('[data-value]').textContent = text;
-                row.classList.remove('hidden');
+                row.hidden = false;
             }
 
             const date = params.get('date');
