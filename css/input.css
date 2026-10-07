@@ -1233,3 +1233,260 @@ footer[id] {
     grid-column: auto;
   }
 }
+
+/* ------------------------------------------------------------------
+   Hero reveal on load: the block opens out of a point in its centre,
+   then (desktop) the photo opens out of its own centre a beat later.
+   .reveal-ready is set by an inline script in <head>; js/main.js adds
+   .is-revealed once the photo is ready (or after a short timeout).
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready .hero__grid {
+    clip-path: inset(50% 50% 50% 50%);
+  }
+
+  .reveal-ready .hero.is-revealed .hero__grid {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1s cubic-bezier(0.7, 0, 0.2, 1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 960px) {
+  .reveal-ready .hero__media img {
+    clip-path: inset(50% 50% 50% 50%);
+  }
+
+  .reveal-ready .hero.is-revealed .hero__media img {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.85s cubic-bezier(0.7, 0, 0.2, 1) 0.45s;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Locations page: the 12 stops as "chapters". Desktop: the stage pins
+   and each next stop grows in from the bottom-left corner over the
+   previous one (js/main.js initChapters). Phones / reduced motion: a
+   plain list.
+   ------------------------------------------------------------------ */
+.route-page {
+  background: var(--paper);
+}
+
+/* The locations page keeps the header in view (main.js skips auto-hide
+   when the header has data-autohide="off"). */
+
+.route-intro {
+    padding: calc(var(--brand-h) + 48px) 24px 56px;
+    color: var(--ink);
+}
+.route-intro__eyebrow { font-size: 15px; margin-bottom: 14px; }
+.route-intro__title {
+    font-family: 'Eczar', Georgia, serif; font-weight: 500;
+    font-size: clamp(2.6rem, 9vw, 5.25rem); line-height: 1.02; letter-spacing: -0.02em;
+    margin: 0 0 22px;
+}
+.route-intro__lede { font-size: 18px; line-height: 1.6; max-width: 36rem; margin: 0; }
+
+/* ---------- shared chapter look ---------- */
+.chapter {
+    display: grid;
+    color: var(--ink);
+}
+.chapter__panel {
+    background: var(--chapter-bg);
+    padding: 40px 24px 32px;
+    display: flex; flex-direction: column;
+}
+.chapter__count { font-size: 15px; margin: 0 0 18px; font-variant-numeric: tabular-nums; }
+.chapter__count span { opacity: 0.6; }
+.chapter__title {
+    font-family: 'Eczar', Georgia, serif; font-weight: 500;
+    font-size: clamp(2rem, 6.5vw, 3.6rem); line-height: 1.05; letter-spacing: -0.02em;
+    margin: 0 0 20px; max-width: 16ch;
+}
+.chapter__quote { font-size: 18px; line-height: 1.55; font-style: italic; margin: 0 0 18px; max-width: 34rem; }
+.chapter__desc { font-size: 15px; line-height: 1.6; margin: 0 0 24px; max-width: 34rem; opacity: 0.8; }
+.chapter__next {
+    margin: auto 0 0; padding-top: 16px; font-size: 14px;
+    border-top: 1px solid rgba(21, 20, 15, 0.25);
+}
+.chapter__media { background: var(--chapter-bg); padding: 0 24px 24px; }
+.chapter__media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* ---------- phones (and reduced motion): a plain list ---------- */
+.chapters { display: grid; gap: 16px; padding-bottom: 96px; }
+
+/* ---------- desktop: pinned stage, chapters stack over each other ---------- */
+@media (min-width: 960px) {
+    .route-intro { padding: calc(var(--brand-h) + 72px) 40px 72px; }
+    .chapter { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+    .chapter__panel { padding: 56px; }
+    .chapter__media { padding: 0; }
+    .chapter__media { overflow: hidden; }
+    .chapter__media img { height: 100%; aspect-ratio: auto; }
+
+    .chapters--stack {
+        display: block;
+        padding: 0;
+        /* one viewport for the stage + one step of scrolling per chapter change */
+        height: calc(100vh + (var(--count) - 1) * var(--step));
+        --step: 85vh;
+    }
+    .chapters--stack .chapters__stage {
+        position: sticky; top: 0; height: 100vh; overflow: hidden;
+    }
+    .chapters--stack .chapter {
+        position: absolute;
+        top: var(--brand-h); bottom: 40px; left: 40px; right: 0;
+        /* hold the row to the box, or the photo's natural height stretches it */
+        grid-template-rows: minmax(0, 1fr);
+        z-index: calc(var(--i) + 1);
+    }
+    /* every chapter after the first starts as a point in its bottom-left corner;
+       the script grows it with --p (0..1) */
+    .chapters--stack .chapter:not(:first-child) {
+        clip-path: inset(calc((1 - var(--p, 0)) * 100%) calc((1 - var(--p, 0)) * 100%) 0 0);
+    }
+    .chapters--stack .chapter__panel > * { opacity: var(--t, 1); }
+
+    .chapters__progress {
+        position: absolute; left: 40px; right: 0; bottom: 16px; height: 1px;
+        background: rgba(21, 20, 15, 0.15);
+    }
+    .chapters__progress span {
+        position: absolute; top: 0; bottom: 0; left: 0; width: 0; background: var(--ink);
+    }
+}
+.chapters--list .chapters__progress { display: none; }
+    
+
+/* ------------------------------------------------------------------
+   Home: pinned stops rail (desktop, motion allowed). The section is
+   made tall, the stage sticks, and the rail is translated sideways
+   from the scroll position (js/main.js initStopsRail sets --travel).
+   ------------------------------------------------------------------ */
+.stops--pinned {
+  padding: 0;
+  height: calc(100vh + var(--travel, 0px));
+}
+
+.stops--pinned .stops__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(320px, 30%) minmax(0, 1fr);
+  align-items: center;
+  padding-top: var(--header-h);
+  overflow: hidden;
+}
+
+.stops--pinned .stops__head {
+  grid-template-columns: 1fr;
+  align-items: start;
+  margin: 0;
+  padding: 0 40px;
+}
+
+.stops--pinned .stops__title {
+  font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+}
+
+.stops--pinned .stops__lede {
+  font-size: 16px;
+}
+
+.stops--pinned .stops__arrow {
+  display: none;
+}
+
+.stops--pinned .stops__viewport {
+  overflow: hidden;
+}
+
+.stops--pinned .stops__rail {
+  overflow: visible;
+  scroll-snap-type: none;
+  padding: 0 40px 0 0;
+  grid-auto-columns: calc(min(54vh, 500px) * 0.8);
+  will-change: transform;
+}
+
+.stops--pinned .stops__progress {
+  margin: 32px 40px 0 0;
+}
+
+/* ------------------------------------------------------------------
+   Entrances (desktop, motion allowed; classes only exist once
+   js/main.js initEntrances has run, so nothing is hidden without JS).
+   ------------------------------------------------------------------ */
+/* Headings rise line by line from behind a mask. */
+.rl {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders (g, p, y) inside the mask */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.rl > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out-expo);
+  transition-delay: calc(var(--l, 0) * 0.09s);
+}
+
+.is-shown .rl > span {
+  transform: none;
+}
+
+/* The gold price panel opens out of a point, like the hero. */
+.opens-from-point {
+  clip-path: inset(50% 50% 50% 50%);
+}
+
+.opens-from-point.is-shown {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+/* Last card of the home page rail: the way on to the full route. */
+.stop-card--more .stop-card__media {
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+
+.stop-card__more-count {
+  font-family: 'Eczar', Georgia, serif;
+  font-size: clamp(4rem, 7vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  margin: 0 0 16px;
+}
+
+.stop-card__more-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 28px;
+  color: rgba(243, 238, 227, 0.75);
+  max-width: 18rem;
+}
+
+.stop-card__more-link {
+  align-self: flex-start;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 6px 0;
+  background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 100% 1px;
+  transition: background-size 0.35s var(--ease-out-expo);
+}
+
+.stop-card--more a:hover .stop-card__more-link,
+.stop-card--more a:focus-visible .stop-card__more-link {
+  background-size: 0 1px;
+}

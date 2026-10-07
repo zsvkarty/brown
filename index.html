@@ -10,10 +10,19 @@
     <title>Dan Brown Walking Tour in Prague | Prague Trip</title>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="./css/output.css?v=11" as="style">
+    <link rel="preload" href="./css/output.css?v=15" as="style">
+
+    <!-- Hero reveal: hide the hero until main.js opens it; never longer than 2.5s -->
+    <script>
+        document.documentElement.classList.add('reveal-ready');
+        setTimeout(function () {
+            var h = document.getElementById('hero');
+            if (h) h.classList.add('is-revealed');
+        }, 2500);
+    </script>
 
     <!-- Stylesheets -->
-    <link href="./css/output.css?v=11" rel="stylesheet">
+    <link href="./css/output.css?v=15" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -103,150 +112,104 @@
 
         <!-- The 12 stops -->
         <section class="stops" id="about" aria-labelledby="stops-title">
-            <div class="stops__head">
-                <div>
-                    <p class="stops__eyebrow">The route</p>
-                    <h2 class="stops__title" id="stops-title">Twelve places from the novel</h2>
-                    <p class="stops__lede">
-                        From the Astronomical Clock to Folimanka Park, every stop appears in
-                        <em>The Secret of Secrets</em>. At each one, your guide reveals the secret hidden there.
-                    </p>
+            <!-- desktop: the stage pins and the rail slides sideways as you scroll (js/main.js initStopsRail) -->
+            <div class="stops__stage">
+                <div class="stops__head">
+                    <div>
+                        <p class="stops__eyebrow">The route</p>
+                        <h2 class="stops__title" id="stops-title">Twelve places from the novel</h2>
+                        <p class="stops__lede">
+                            From the Astronomical Clock to Folimanka Park, every stop appears in
+                            <em>The Secret of Secrets</em>. At each one, your guide reveals the secret hidden there.
+                        </p>
+                    </div>
+                    <div class="stops__controls">
+                        <a href="tour-locations.html" class="stops__all">All 12 locations</a>
+                        <button type="button" class="stops__arrow" data-stops-prev aria-label="Previous stops" aria-controls="stops-rail">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                        </button>
+                        <button type="button" class="stops__arrow" data-stops-next aria-label="Next stops" aria-controls="stops-rail">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
                 </div>
-                <div class="stops__controls">
-                    <a href="tour-locations.html" class="stops__all">All 12 locations</a>
-                    <button type="button" class="stops__arrow" data-stops-prev aria-label="Previous stops" aria-controls="stops-rail">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
-                    </button>
-                    <button type="button" class="stops__arrow" data-stops-next aria-label="Next stops" aria-controls="stops-rail">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-                    </button>
+
+                <div class="stops__viewport">
+                    <ol class="stops__rail" id="stops-rail" aria-label="Highlights from the 12 stops">
+                        <li class="stop-card">
+                            <a href="tour-locations.html#stop-1">
+                                <div class="stop-card__media">
+                                    <img src="./images/stops/01-prazsky-orloj.jpg" alt="" loading="lazy" decoding="async">
+                                    <span class="stop-card__num">01</span>
+                                </div>
+                                <h3 class="stop-card__title">Pražský orloj</h3>
+                                <p class="stop-card__quote">&ldquo;They have been circling here aimlessly since the fifteenth century, Golem thought, constantly attracting more sheep who come to watch them.&rdquo;</p>
+                            </a>
+                        </li>
+                        <li class="stop-card">
+                            <a href="tour-locations.html#stop-2">
+                                <div class="stop-card__media">
+                                    <img src="./images/stops/02-old-town-square.jpg" alt="" loading="lazy" decoding="async">
+                                    <span class="stop-card__num">02</span>
+                                </div>
+                                <h3 class="stop-card__title">Old Town Square</h3>
+                                <p class="stop-card__quote">&ldquo;When he reached the Old Town Square, he was surrounded by the smell of roasted chestnuts and the bleating of bagpipes played by a local street musician&rdquo;</p>
+                            </a>
+                        </li>
+                        <li class="stop-card">
+                            <a href="tour-locations.html#stop-4">
+                                <div class="stop-card__media">
+                                    <img src="./images/stops/04-black-angel-s-bar.jpg" alt="" loading="lazy" decoding="async">
+                                    <span class="stop-card__num">04</span>
+                                </div>
+                                <h3 class="stop-card__title">Black Angel's Bar</h3>
+                                <p class="stop-card__quote">&ldquo;Half an hour had passed since Golem entered the Hotel U Prince and descended into the local underground. He found Black Angel’s Bar closed; a cleaning crew was currently mopping the floors and pulling cigarette butts out of the roughly hewn ancient stone walls.&rdquo;</p>
+                            </a>
+                        </li>
+                        <li class="stop-card">
+                            <a href="tour-locations.html#stop-7">
+                                <div class="stop-card__media">
+                                    <img src="./images/stops/07-clementinum.jpg" alt="" loading="lazy" decoding="async">
+                                    <span class="stop-card__num">07</span>
+                                </div>
+                                <h3 class="stop-card__title">Clementinum (Library and Astronomical Tower)</h3>
+                                <p class="stop-card__quote">&ldquo;Langdon pulled back and tried to make out her face in the dark. 'Katherine,' he whispered, 'I have no idea what is happening here, but I am so sorry for what you had to go through…&rdquo;</p>
+                            </a>
+                        </li>
+                        <li class="stop-card">
+                            <a href="tour-locations.html#stop-9">
+                                <div class="stop-card__media">
+                                    <img src="./images/stops/09-charles-bridge.jpg" alt="" loading="lazy" decoding="async">
+                                    <span class="stop-card__num">09</span>
+                                </div>
+                                <h3 class="stop-card__title">Charles Bridge</h3>
+                                <p class="stop-card__quote">&ldquo;He stared at the pointed weapon and immediately wondered if, conversely, he was dreaming this. When the woman reached his level, he realized that he was completely paralyzed by his own confusion and couldn't move from the spot.&rdquo;</p>
+                            </a>
+                        </li>
+                        <li class="stop-card">
+                            <a href="tour-locations.html#stop-11">
+                                <div class="stop-card__media">
+                                    <img src="./images/stops/11-petrin-lookout-tower-and-mirror-maze.jpg" alt="" loading="lazy" decoding="async">
+                                    <span class="stop-card__num">11</span>
+                                </div>
+                                <h3 class="stop-card__title">Petřín Lookout Tower and Mirror Maze</h3>
+                                <p class="stop-card__quote">&ldquo;Lieutenant Pavel burst into the visitor center beneath the Petřín Lookout Tower with a pistol in his hand.&rdquo;</p>
+                            </a>
+                        </li>
+                        <li class="stop-card stop-card--more">
+                            <a href="tour-locations.html">
+                                <div class="stop-card__media">
+                                    <p class="stop-card__more-count">+6</p>
+                                    <p class="stop-card__more-text">more stops on the route, from Týn Literary Café to Folimanka Park</p>
+                                    <span class="stop-card__more-link">See the full route</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ol>
+
+                    <div class="stops__progress" aria-hidden="true"><span></span></div>
                 </div>
             </div>
-
-            <ol class="stops__rail" id="stops-rail" aria-label="The 12 stops of the tour">
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-1">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/01-prazsky-orloj.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">01</span>
-                        </div>
-                        <h3 class="stop-card__title">Pražský orloj</h3>
-                        <p class="stop-card__quote">&ldquo;They have been circling here aimlessly since the fifteenth century, Golem thought, constantly attracting more sheep who come to watch them.&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-2">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/02-old-town-square.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">02</span>
-                        </div>
-                        <h3 class="stop-card__title">Old Town Square</h3>
-                        <p class="stop-card__quote">&ldquo;When he reached the Old Town Square, he was surrounded by the smell of roasted chestnuts and the bleating of bagpipes played by a local street musician&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-3">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/03-tyn-literary-cafe.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">03</span>
-                        </div>
-                        <h3 class="stop-card__title">Týn Literary Café</h3>
-                        <p class="stop-card__quote">&ldquo;The Old Town was a veritable labyrinth of passages and arcades, famous for its vibrant nightlife and a multitude of distinctive establishments, among which was the Týn Literary Café for writers and intellectuals…&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-4">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/04-black-angel-s-bar.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">04</span>
-                        </div>
-                        <h3 class="stop-card__title">Black Angel's Bar</h3>
-                        <p class="stop-card__quote">&ldquo;Half an hour had passed since Golem entered the Hotel U Prince and descended into the local underground. He found Black Angel’s Bar closed; a cleaning crew was currently mopping the floors and pulling cigarette butts out of the roughly hewn ancient stone walls.&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-5">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/05-old-jewish-cemetery.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">05</span>
-                        </div>
-                        <h3 class="stop-card__title">Old Jewish Cemetery</h3>
-                        <p class="stop-card__quote">&ldquo;…the clay shards are said to lie to this day, above the ancient cemetery where Rabbi Löw himself now rests.&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-6">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/06-old-new-synagogue.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">06</span>
-                        </div>
-                        <h3 class="stop-card__title">Old-New Synagogue</h3>
-                        <p class="stop-card__quote">&ldquo;He quickly smashed the clay body and hid its pieces in the attic of Prague's Old-New Synagogue, where the clay shards are said to lie to this day…&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-7">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/07-clementinum.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">07</span>
-                        </div>
-                        <h3 class="stop-card__title">Clementinum (Library and Astronomical Tower)</h3>
-                        <p class="stop-card__quote">&ldquo;Langdon pulled back and tried to make out her face in the dark. 'Katherine,' he whispered, 'I have no idea what is happening here, but I am so sorry for what you had to go through…&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-8">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/08-hotel-four-seasons.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">08</span>
-                        </div>
-                        <h3 class="stop-card__title">Hotel Four Seasons</h3>
-                        <p class="stop-card__quote">&ldquo;Langdon had been in Prague for three days and, just like during his previous visits, he stayed at the Four Seasons. When the hotel manager insisted on providing him with the Royal Suite instead of his booked room…&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-9">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/09-charles-bridge.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">09</span>
-                        </div>
-                        <h3 class="stop-card__title">Charles Bridge</h3>
-                        <p class="stop-card__quote">&ldquo;He stared at the pointed weapon and immediately wondered if, conversely, he was dreaming this. When the woman reached his level, he realized that he was completely paralyzed by his own confusion and couldn't move from the spot.&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-10">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/10-american-embassy.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">10</span>
-                        </div>
-                        <h3 class="stop-card__title">American Embassy (Schönborn Palace)</h3>
-                        <p class="stop-card__quote">&ldquo;On the second floor of the American embassy, the doors just opened and Michael Harris walked out, noticeably shaken after a private meeting with the ambassador. He had just been partially 'briefed' and was still trying to process in his head all the implications of the top-secret information the ambassador had shared with him.&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-11">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/11-petrin-lookout-tower-and-mirror-maze.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">11</span>
-                        </div>
-                        <h3 class="stop-card__title">Petřín Lookout Tower and Mirror Maze</h3>
-                        <p class="stop-card__quote">&ldquo;Lieutenant Pavel burst into the visitor center beneath the Petřín Lookout Tower with a pistol in his hand.&rdquo;</p>
-                    </a>
-                </li>
-                <li class="stop-card">
-                    <a href="tour-locations.html#stop-12">
-                        <div class="stop-card__media">
-                            <img src="./images/stops/12-folimanka-park-and-bastion-u-bozich-muk.jpg" alt="" loading="lazy" decoding="async">
-                            <span class="stop-card__num">12</span>
-                        </div>
-                        <h3 class="stop-card__title">Folimanka Park and Bastion u Božích muk</h3>
-                        <p class="stop-card__quote">&ldquo;A tasteful bronze panel above the main entrance announced: GESSNER INSTITUTE. The doors of the bastion consisted of a wide, stylish pane of reinforced frosted glass in a steel frame.&rdquo;</p>
-                    </a>
-                </li>
-            </ol>
-
-            <div class="stops__progress" aria-hidden="true"><span></span></div>
         </section>
 
         <!-- The tour: what it is, the practical facts, price -->
@@ -420,7 +383,7 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="./js/main.js?v=5"></script>
+    <script src="./js/main.js?v=9"></script>
     <script src="./js/animations.js"></script>
 </body>
 
