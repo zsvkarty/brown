@@ -191,7 +191,20 @@ footer[id] {
   align-items: center;
   gap: 48px;
   padding: 0 calc(var(--brand-w) + 24px) 0 24px;
-  border-bottom: 1px solid rgba(21, 20, 15, 0.08);
+  transition: background-color 0.3s ease;
+}
+
+/* At the very top of the page the bar is see-through, so the home hero
+   photo can run up behind it (js/main.js toggles .is-top). */
+.site-header.is-top .site-header__bar {
+  background: transparent;
+}
+
+/* While the home hero photo is under the header, the cream only runs up to
+   where the photo starts (js/main.js sets --bar-cut), so the photo is never
+   covered by a band of cream. */
+.site-header.over-photo .site-header__bar {
+  background: linear-gradient(to right, var(--paper) var(--bar-cut, 100%), transparent var(--bar-cut, 100%));
 }
 
 .site-nav {
@@ -201,7 +214,8 @@ footer[id] {
 }
 
 .site-nav__link {
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 500;
   line-height: 1;
   color: var(--ink);
   padding: 8px 0;
@@ -217,13 +231,14 @@ footer[id] {
 
 .header-cta {
   display: none;
-  margin-left: auto;
+  /* sits with the links, like the museum's nav */
+  margin-left: -8px;
   align-items: center;
-  height: 44px;
+  height: 46px;
   padding: 0 22px;
   border: 1px solid var(--ink);
   color: var(--ink);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
@@ -564,18 +579,40 @@ footer[id] {
 }
 
 @media (min-width: 960px) {
+  /* Museum-style offset: the photo starts at the very top of the page,
+     behind the header and logo block; the panel starts below the header
+     and runs a little lower than the photo. */
   .hero {
-    padding-top: calc(var(--brand-h) + 0px);
+    padding-top: 0;
   }
 
+  /* Three tracks: the panel spans the first two, the photo the last two,
+     so the photo overlaps the panel by the middle track (like the museum's
+     sunflowers over the yellow block). */
   .hero__grid {
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    margin-left: 40px;
-    min-height: min(78vh, 760px);
+    grid-template-columns: minmax(0, 1.15fr) clamp(96px, 10vw, 180px) minmax(0, 0.85fr);
+    margin-left: 16px;
+    min-height: min(88vh, 860px);
   }
 
   .hero__panel {
-    padding: 64px 56px 64px;
+    grid-column: 1 / 3;
+    grid-row: 1;
+    margin-top: calc(var(--header-h) + 24px);
+    padding: 64px 56px 64px 64px;
+  }
+
+  .hero__panel > * {
+    /* keep the text clear of the part the photo covers */
+    margin-right: clamp(96px, 10vw, 180px);
+  }
+
+  .hero__media {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 56px;
   }
 
   .btn-ink,
