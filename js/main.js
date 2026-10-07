@@ -13,10 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize FAQ functionality
     initFAQ();
     
-    // Header: mobile menu + hide on scroll + see-through at the top
+    // Header: mobile menu + hide on scroll
     initSiteMenu();
     initHeaderAutoHide();
-    initHeaderTop();
 
     // Home page: the 12 stops rail
     initStopsRail();
@@ -386,26 +385,4 @@ function initChapters() {
     }
     window.addEventListener('hashchange', goToHash);
     window.addEventListener('load', goToHash);
-}
-
-// .is-top while the page sits at the very top: the header bar is see-through
-// there, so the home hero photo can run up behind it.
-function initHeaderTop() {
-    const header = document.getElementById('site-header');
-    if (!header) return;
-    const photo = document.querySelector('.hero__media');
-    const desktop = window.matchMedia('(min-width: 960px)');
-    const update = () => {
-        header.classList.toggle('is-top', window.scrollY < 8);
-        let over = false;
-        if (photo && desktop.matches) {
-            const r = photo.getBoundingClientRect();
-            over = r.top < header.offsetHeight && r.bottom > 0;
-            if (over) header.style.setProperty('--bar-cut', Math.round(r.left) + 'px');
-        }
-        header.classList.toggle('over-photo', over);
-    };
-    window.addEventListener('resize', update);
-    window.addEventListener('scroll', update, { passive: true });
-    update();
 }
