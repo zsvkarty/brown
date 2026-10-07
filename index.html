@@ -5,16 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Experience Prague through Dan Brown's eyes with our exclusive guided tours and escape room adventures. Discover the mysteries hidden in Prague's historic streets.">
-    <meta name="keywords" content="Dan Brown, Prague tours, escape room, mystery, guided tours, Prague attractions">
-    <title>Prague Dan Brown Adventures - Mysterious Tours & Escape Rooms</title>
+        content="A private Dan Brown walking tour of Prague: 12 locations from The Secret of Secrets with a local guide. From €99 per group, up to 8 people.">
+    <meta name="keywords" content="Dan Brown, Prague tour, The Secret of Secrets, private walking tour, Prague attractions">
+    <title>Dan Brown Walking Tour in Prague | Prague Trip</title>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="./newhero.png" as="image">
-    <link rel="preload" href="./css/output.css?v=4" as="style">
+    <link rel="preload" href="./css/output.css?v=11" as="style">
 
     <!-- Stylesheets -->
-    <link href="./css/output.css?v=4" rel="stylesheet">
+    <link href="./css/output.css?v=11" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -22,605 +21,350 @@
 
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="header">
-        <nav class="navbar-floating transition-all duration-500" role="navigation" aria-label="Main navigation">
-            <div class="flex items-center justify-between py-4 px-8">
-                <!-- Logo/Brand -->
-                <div class="flex items-center">
-                    <h1 class="text-xl md:text-2xl font-display font-semibold text-gradient tracking-tight brand-text">
-                        Prague Mysteries
-                    </h1>
-                </div>
+    <header class="site-header" id="site-header">
+        <div class="site-header__bar">
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu"
+                aria-expanded="false" aria-controls="site-menu">
+                <span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+            </button>
 
-                <!-- Navigation Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about"
-                        class="text-white/90 hover:text-accent-gold font-medium transition-all duration-300 hover:-translate-y-0.5 nav-link">About</a>
-                    <a href="tour-locations.html"
-                        class="text-white/90 hover:text-accent-gold font-medium transition-all duration-300 hover:-translate-y-0.5 nav-link">Adventures</a>
-                    <a href="#faq"
-                        class="text-white/90 hover:text-accent-gold font-medium transition-all duration-300 hover:-translate-y-0.5 nav-link">FAQ</a>
-                    <a href="#contact"
-                        class="text-white/90 hover:text-accent-gold font-medium transition-all duration-300 hover:-translate-y-0.5 nav-link">Contact</a>
-                    <a href="private-tour.html" class="btn-primary text-sm font-semibold px-5 py-2">Book Tour</a>
-                </div>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="#services" class="site-nav__link">The Tour</a>
+                <a href="tour-locations.html" class="site-nav__link">Locations</a>
+                <a href="#faq" class="site-nav__link">FAQ</a>
+                <a href="#contact" class="site-nav__link">Contact</a>
+            </nav>
 
-                <!-- Mobile Menu Button -->
-                <button
-                    class="md:hidden text-white/90 hover:text-accent-gold focus:outline-none focus:text-accent-gold nav-link"
-                    id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+            <a href="private-tour.html" class="header-cta">Book a tour</a>
+        </div>
 
-            <!-- Mobile Menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-6 pt-2 pb-6 space-y-2 border-t border-white/10">
-                    <a href="#about"
-                        class="block px-4 py-3 text-white/90 hover:text-accent-gold hover:bg-white/5 rounded-lg transition-all duration-200 nav-link">About</a>
-                    <a href="tour-locations.html"
-                        class="block px-4 py-3 text-white/90 hover:text-accent-gold hover:bg-white/5 rounded-lg transition-all duration-200 nav-link">Adventures</a>
-                    <a href="#faq"
-                        class="block px-4 py-3 text-white/90 hover:text-accent-gold hover:bg-white/5 rounded-lg transition-all duration-200 nav-link">FAQ</a>
-                    <a href="#contact"
-                        class="block px-4 py-3 text-white/90 hover:text-accent-gold hover:bg-white/5 rounded-lg transition-all duration-200 nav-link">Contact</a>
-                    <a href="private-tour.html"
-                        class="block px-4 py-3 text-accent-gold font-semibold hover:bg-white/5 rounded-lg transition-all duration-200 nav-link">Book
-                        Tour</a>
-                </div>
-            </div>
-        </nav>
+        <a href="index.html" class="brand-block" aria-label="Prague Trip, home">
+            <span class="brand-block__name">Prague<br>Trip</span>
+            <span class="brand-block__tag">Dan Brown Tours</span>
+        </a>
     </header>
+
+    <!-- Mobile menu (grows out of the menu button, see .site-menu in css/input.css) -->
+    <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" inert>
+        <div class="site-menu__top">
+            <button type="button" class="site-menu__close" id="menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5" aria-hidden="true">
+                    <path d="M4 4l16 16M20 4L4 20" />
+                </svg>
+            </button>
+        </div>
+
+        <p class="site-menu__title">Menu</p>
+
+        <nav class="site-menu__links" aria-label="Mobile navigation">
+            <a href="index.html" style="--i: 0">Home</a>
+            <a href="#services" style="--i: 1">The Tour</a>
+            <a href="tour-locations.html" style="--i: 2">Locations</a>
+            <a href="#faq" style="--i: 3">FAQ</a>
+            <a href="#contact" style="--i: 4">Contact</a>
+        </nav>
+
+        <div class="site-menu__footer" style="--i: 6">
+            <a href="private-tour.html" class="site-menu__cta">Book a tour</a>
+            <div>
+                <a href="tel:+420731023835">+420 731 023 835</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="relative min-h-screen flex items-center justify-center bg-hero pt-32" id="hero" role="banner">
-            <!-- Hero Overlay -->
-            <div class="hero-overlay"></div>
-
-            <!-- Hero Content -->
-            <div class="relative z-10 container-custom text-center">
-                <div class="max-w-6xl mx-auto">
-                    <div class="animate-on-scroll" style="animation-delay: 0.2s;">
-                        <!-- Subtitle -->
-
-
-                        <h2
-                            class="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-white mb-8 text-shadow tracking-tight leading-tight">
-                            Discover Dan Brown’s<br>
-                            <span class="text-gradient">Prague Mysteries</span>
-                        </h2>
-                    </div>
-
-                    <div class="animate-on-scroll" style="animation-delay: 0.4s;">
-                        <p
-                            class="text-xl md:text-2xl text-white/90 mb-12 max-w-4xl mx-auto text-shadow-soft leading-relaxed font-light">
-                            Enjoy a Dan Brown themed tour of Prague. You will visit all the key places from Brown's book
-                            The Secret of Secrets with a local tour guide, who will uncover a hidden secret at each
-                            location.
-                        </p>
-                    </div>
-
-                    <div class="animate-on-scroll flex justify-center mt-32" style="animation-delay: 0.6s;">
-                        <div class="animate-bounce">
-                            <a href="#about"
-                                class="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-accent-gold hover:text-primary-dark hover:border-accent-gold transition-all duration-300 shadow-lg"
-                                aria-label="Scroll to explore">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Explore Tour Locations Section -->
-        <section class="section-padding bg-gradient-to-br from-slate-50 to-white" id="about">
-            <div class="container-custom">
-                <div class="max-w-5xl mx-auto">
-                    <div class="text-center mb-16 animate-on-scroll">
-                        <h2 class="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-6 tracking-tight">
-                            Explore <span class="text-gradient">Tour Locations</span>
-                        </h2>
-                        <p class="text-xl text-slate-600 font-light leading-relaxed max-w-3xl mx-auto">
-                            Walk through Prague's most mysterious streets. Here's a taste of the 12-stop journey that
-                            awaits you.
-                        </p>
-                    </div>
-
-                    <div class="space-y-8">
-                        <!-- Stop 1 -->
-                        <div
-                            class="flex flex-col md:flex-row text-center md:text-left gap-6 md:gap-6 md:p-8 animate-on-scroll delay-300 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 items-center shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <div class="flex-shrink-0 flex justify-center w-full md:w-auto">
-                                <img src="./images/new img/orloj.png" alt="Pražský orloj"
-                                    class="w-40 h-40 md:w-56 md:h-56 rounded-2xl shadow-md object-cover border-4 border-white">
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-display font-semibold text-slate-900 mb-3">1. Pražský orloj
-                                </h3>
-                                <p class="text-slate-600 mb-4 leading-relaxed">This unique medieval astronomical clock
-                                    from 1410 is the third-oldest clock of its kind in the world and the oldest one
-                                    still in operation. In addition to the time, it shows the position of the Sun and
-                                    Moon in the sky, and its mechanics conceal symbolism that continues to amaze
-                                    scientists to this day.</p>
-                                <blockquote
-                                    class="border-l-4 border-accent-gold pl-4 py-2 text-slate-700 italic bg-white/50 rounded-r-lg">
-                                    "They have been circling here aimlessly since the fifteenth century, Golem thought, constantly attracting more sheep who come to watch them."
-                                </blockquote>
-                            </div>
-                        </div>
-
-                        <!-- Path Connector -->
-                        <div class="flex flex-col items-center justify-center py-2 animate-on-scroll opacity-80">
-                            <div
-                                class="flex items-center gap-1.5 text-xs font-semibold text-accent-gold bg-accent-gold/10 px-3 py-1 rounded-full mb-1">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                2 min walk
-                            </div>
-                            <svg class="w-8 h-10 text-accent-gold drop-shadow-md" fill="none" viewBox="0 0 24 40"
-                                stroke="currentColor">
-                                <line x1="12" y1="0" x2="12" y2="28" stroke-width="3" stroke-dasharray="6 6"
-                                    stroke-linecap="round" />
-                                <polyline points="6 22 12 30 18 22" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-
-                        <!-- Stop 2 -->
-                        <div
-                            class="flex flex-col md:flex-row-reverse text-center md:text-right gap-6 md:gap-6 md:p-8 animate-on-scroll delay-300 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 items-center shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <div class="flex-shrink-0 flex justify-center w-full md:w-auto">
-                                <img src="./images/new img/koserl matky bozi.png" alt="Church of Our Lady before Týn"
-                                    class="w-40 h-40 md:w-56 md:h-56 rounded-2xl shadow-md object-cover border-4 border-white">
-                            </div>
-                            <div class="flex-1 text-left md:text-right">
-                                <h3 class="text-2xl font-display font-semibold text-slate-900 mb-3">2. Old Town Square</h3>
-                                <p class="text-slate-600 mb-4 leading-relaxed">A pinnacle of late Gothic architecture,
-                                    this basilica was the main church of the Old Town in the late Middle Ages. Located
-                                    near the Royal Court, it was frequently visited by King Wenceslas IV. The eminent
-                                    early modern astronomer, astrologer, and alchemist Tycho Brahe is buried in the
-                                    temple.</p>
-                                <blockquote
-                                    class="border-r-4 md:border-l-0 border-l-4 border-accent-gold pr-0 md:pr-4 pl-4 md:pl-0 py-2 text-slate-700 italic bg-white/50 rounded-l-lg">
-                                    "When he reached the Old Town Square, he was surrounded by the smell of roasted chestnuts and the bleating of bagpipes played by a local street musician"
-                                </blockquote>
-                            </div>
-                        </div>
-
-                        <!-- Path Connector -->
-                        <div class="flex flex-col items-center justify-center py-2 animate-on-scroll opacity-80">
-                            <div
-                                class="flex items-center gap-1.5 text-xs font-semibold text-accent-gold bg-accent-gold/10 px-3 py-1 rounded-full mb-1">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                2 min walk
-                            </div>
-                            <svg class="w-8 h-10 text-accent-gold drop-shadow-md" fill="none" viewBox="0 0 24 40"
-                                stroke="currentColor">
-                                <line x1="12" y1="0" x2="12" y2="28" stroke-width="3" stroke-dasharray="6 6"
-                                    stroke-linecap="round" />
-                                <polyline points="6 22 12 30 18 22" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-
-                        <!-- Stop 3 -->
-                        <div
-                            class="flex flex-col md:flex-row text-center md:text-left gap-6 md:gap-6 md:p-8 animate-on-scroll delay-300 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 items-center shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <div class="flex-shrink-0 flex justify-center w-full md:w-auto">
-                                <img src="./images/new img/tlk.png" alt="Týn Literary Café"
-                                    class="w-40 h-40 md:w-56 md:h-56 rounded-2xl shadow-md object-cover border-4 border-white">
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-2xl font-display font-semibold text-slate-900 mb-3">3. Týn Literary Café
-                                </h3>
-                                <p class="text-slate-600 mb-4 leading-relaxed">A hidden oasis of calm in the alleys
-                                    behind the Týn Church. For decades, this inconspicuous courtyard has been a refuge
-                                    for writers, intellectuals, and students who discuss history and philosophy over a
-                                    cup of coffee.</p>
-                                <blockquote
-                                    class="border-l-4 border-accent-gold pl-4 py-2 text-slate-700 italic bg-white/50 rounded-r-lg">
-                                    "The Old Town was a veritable labyrinth of passages and arcades, famous for its vibrant nightlife and a multitude of distinctive establishments, among which was the Týn Literary Café for writers and intellectuals…"
-                                </blockquote>
-                            </div>
-                        </div>
-
-                        <!-- Path Connector -->
-                        <div class="flex flex-col items-center justify-center py-2 animate-on-scroll opacity-80">
-                            <div
-                                class="flex items-center gap-1.5 text-xs font-semibold text-accent-gold bg-accent-gold/10 px-3 py-1 rounded-full mb-1">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                5 min walk
-                            </div>
-                            <svg class="w-8 h-10 text-accent-gold drop-shadow-md" fill="none" viewBox="0 0 24 40"
-                                stroke="currentColor">
-                                <line x1="12" y1="0" x2="12" y2="28" stroke-width="3" stroke-dasharray="6 6"
-                                    stroke-linecap="round" />
-                                <polyline points="6 22 12 30 18 22" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-
-                        <!-- Stop 4 -->
-                        <div
-                            class="flex flex-col md:flex-row-reverse text-center md:text-right gap-6 md:gap-6 md:p-8 animate-on-scroll delay-300 bg-slate-50 p-6 md:p-8 rounded-2xl border border-slate-100 items-center shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <div class="flex-shrink-0 flex justify-center w-full md:w-auto">
-                                <img src="./images/new img/blackangel.png" alt="Black Angel´s Bar"
-                                    class="w-40 h-40 md:w-56 md:h-56 rounded-2xl shadow-md object-cover border-4 border-white">
-                            </div>
-                            <div class="flex-1 text-left md:text-right">
-                                <h3 class="text-2xl font-display font-semibold text-slate-900 mb-3">4. Black Angel's Bar
-                                </h3>
-                                <p class="text-slate-600 mb-4 leading-relaxed">This prestigious bar is located in a
-                                    12th-century Gothic cellar that breathes the atmosphere of Prohibition. The
-                                    authentic stone vaults and chiaroscuro lighting create the illusion of falling back
-                                    in time to an era when alchemists and secret brotherhoods gathered here.</p>
-                                <blockquote
-                                    class="border-r-4 md:border-l-0 border-l-4 border-accent-gold pr-0 md:pr-4 pl-4 md:pl-0 py-2 text-slate-700 italic bg-white/50 rounded-l-lg">
-                                    "Half an hour had passed since Golem entered the Hotel U Prince and descended into the local underground. He found Black Angel’s Bar closed; a cleaning crew was currently mopping the floors and pulling cigarette butts out of the roughly hewn ancient stone walls."
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CTA to full locations page -->
-                    <div class="text-center mt-16 animate-on-scroll">
-                        <p class="text-slate-500 mb-6 text-lg">… and 8 more hidden gems across Prague's historic streets
-                        </p>
-                        <a href="tour-locations.html"
-                            class="btn-primary inline-flex items-center text-lg font-semibold group"
-                            aria-label="Discover all 12 tour locations">
-                            Discover All 12 Locations
-                            <svg class="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tour Feature Section — split layout -->
-        <section id="services" style="display:grid; grid-template-columns: 1fr 1fr; min-height: 600px;">
-
-            <!-- Left: Photo fills the column completely -->
-            <div style="position: relative; overflow: hidden; min-height: 400px;">
-                <img src="./images/prague_hero.png" alt="Aerial view of Prague at golden hour"
-                    style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;">
-                <!-- right-edge fade into content panel -->
-                <div
-                    style="position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, #0f0f23 100%);">
-                </div>
-            </div>
-
-            <!-- Right: Dark content panel -->
-            <div style="background: #0f0f23; display: flex; align-items: center; padding: 4rem 3.5rem;">
-                <div class="animate-on-scroll" style="max-width: 480px; width: 100%;">
-
-                    <!-- Eyebrow badge -->
-                    <div
-                        style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid rgba(201,169,110,0.35); border-radius: 999px; margin-bottom: 28px;">
-                        <svg width="14" height="14" fill="none" stroke="#c9a96e" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span
-                            style="color: #c9a96e; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Private
-                            Walking Tour</span>
-                    </div>
-
-                    <!-- Title -->
-                    <h2 class="font-display"
-                        style="font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; color: #ffffff; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em;">
-                        Dan Brown Prague<br>
-                        <span class="text-gradient">Walking Tour</span>
-                    </h2>
-
-                    <!-- Description -->
-                    <p
-                        style="color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.75; margin-bottom: 32px;">
-                        Follow in Langdon's footsteps through Prague's most mysterious streets. Discover hidden symbols,
-                        ancient crypts, and centuries-old secrets — with a local guide who knows every shadow.
+        <section class="hero" id="hero">
+            <div class="hero__grid">
+                <div class="hero__panel">
+                    <p class="hero__eyebrow">Private walking tour &middot; 12 stops</p>
+                    <h1 class="hero__title">Discover Dan Brown&rsquo;s Prague</h1>
+                    <p class="hero__lede">
+                        Walk the places from Brown&rsquo;s <em>The Secret of Secrets</em> with a local guide,
+                        who uncovers a hidden secret at every stop.
                     </p>
-
-                    <!-- Highlights -->
-                    <ul
-                        style="list-style: none; padding: 0; margin: 0 0 36px 0; display: flex; flex-direction: column; gap: 14px;">
-                        <li
-                            style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); font-size: 0.95rem;">
-                            <span
-                                style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.5); background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg width="10" height="10" fill="none" stroke="#c9a96e" stroke-width="3"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
-                            Expert local guide with historical expertise
-                        </li>
-                        <li
-                            style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); font-size: 0.95rem;">
-                            <span
-                                style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.5); background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg width="10" height="10" fill="none" stroke="#c9a96e" stroke-width="3"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
-                            12 iconic stops — hidden passages &amp; secret locations
-                        </li>
-                        <li
-                            style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.8); font-size: 0.95rem;">
-                            <span
-                                style="width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(201,169,110,0.5); background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <svg width="10" height="10" fill="none" stroke="#c9a96e" stroke-width="3"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </span>
-                            2–3 hours · private group up to 8 people
-                        </li>
-                    </ul>
-
-                    <!-- Price + CTA row -->
-                    <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 12px;">
-                        <div>
-                            <div style="font-size: 2.5rem; font-weight: 800; color: #c9a96e; line-height: 1;">From €99</div>
-                            <div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-top: 2px;">per group
-                            </div>
-                        </div>
-                        <a href="private-tour.html" class="btn-primary"
-                            style="display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 600; white-space: nowrap;">
-                            Book the Tour
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </a>
+                    <div class="hero__actions">
+                        <a href="private-tour.html" class="btn-ink">Book a tour</a>
+                        <a href="tour-locations.html" class="btn-ink-outline">See the 12 locations</a>
                     </div>
+                    <p class="hero__meta">From &euro;99 per group &middot; 2&ndash;3 hours &middot; up to 8 people</p>
+                </div>
+                <div class="hero__media">
+                    <img src="./images/hero-charles-bridge.jpg"
+                        srcset="./images/hero-charles-bridge-900.jpg 900w, ./images/hero-charles-bridge.jpg 1600w"
+                        sizes="(min-width: 960px) 45vw, 100vw"
+                        alt="Charles Bridge in Prague at night, covered in snow, with lit street lamps"
+                        width="1600" height="1088" fetchpriority="high">
+                </div>
+            </div>
+        </section>
 
-                    <p style="color: rgba(255,255,255,0.25); font-size: 0.75rem;">Free cancellation up to 24h · Secure
-                        payment via Stripe</p>
-
+        <!-- The 12 stops -->
+        <section class="stops" id="about" aria-labelledby="stops-title">
+            <div class="stops__head">
+                <div>
+                    <p class="stops__eyebrow">The route</p>
+                    <h2 class="stops__title" id="stops-title">Twelve places from the novel</h2>
+                    <p class="stops__lede">
+                        From the Astronomical Clock to Folimanka Park, every stop appears in
+                        <em>The Secret of Secrets</em>. At each one, your guide reveals the secret hidden there.
+                    </p>
+                </div>
+                <div class="stops__controls">
+                    <a href="tour-locations.html" class="stops__all">All 12 locations</a>
+                    <button type="button" class="stops__arrow" data-stops-prev aria-label="Previous stops" aria-controls="stops-rail">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                    </button>
+                    <button type="button" class="stops__arrow" data-stops-next aria-label="Next stops" aria-controls="stops-rail">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                    </button>
                 </div>
             </div>
 
+            <ol class="stops__rail" id="stops-rail" aria-label="The 12 stops of the tour">
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-1">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/01-prazsky-orloj.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">01</span>
+                        </div>
+                        <h3 class="stop-card__title">Pražský orloj</h3>
+                        <p class="stop-card__quote">&ldquo;They have been circling here aimlessly since the fifteenth century, Golem thought, constantly attracting more sheep who come to watch them.&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-2">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/02-old-town-square.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">02</span>
+                        </div>
+                        <h3 class="stop-card__title">Old Town Square</h3>
+                        <p class="stop-card__quote">&ldquo;When he reached the Old Town Square, he was surrounded by the smell of roasted chestnuts and the bleating of bagpipes played by a local street musician&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-3">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/03-tyn-literary-cafe.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">03</span>
+                        </div>
+                        <h3 class="stop-card__title">Týn Literary Café</h3>
+                        <p class="stop-card__quote">&ldquo;The Old Town was a veritable labyrinth of passages and arcades, famous for its vibrant nightlife and a multitude of distinctive establishments, among which was the Týn Literary Café for writers and intellectuals…&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-4">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/04-black-angel-s-bar.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">04</span>
+                        </div>
+                        <h3 class="stop-card__title">Black Angel's Bar</h3>
+                        <p class="stop-card__quote">&ldquo;Half an hour had passed since Golem entered the Hotel U Prince and descended into the local underground. He found Black Angel’s Bar closed; a cleaning crew was currently mopping the floors and pulling cigarette butts out of the roughly hewn ancient stone walls.&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-5">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/05-old-jewish-cemetery.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">05</span>
+                        </div>
+                        <h3 class="stop-card__title">Old Jewish Cemetery</h3>
+                        <p class="stop-card__quote">&ldquo;…the clay shards are said to lie to this day, above the ancient cemetery where Rabbi Löw himself now rests.&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-6">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/06-old-new-synagogue.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">06</span>
+                        </div>
+                        <h3 class="stop-card__title">Old-New Synagogue</h3>
+                        <p class="stop-card__quote">&ldquo;He quickly smashed the clay body and hid its pieces in the attic of Prague's Old-New Synagogue, where the clay shards are said to lie to this day…&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-7">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/07-clementinum.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">07</span>
+                        </div>
+                        <h3 class="stop-card__title">Clementinum (Library and Astronomical Tower)</h3>
+                        <p class="stop-card__quote">&ldquo;Langdon pulled back and tried to make out her face in the dark. 'Katherine,' he whispered, 'I have no idea what is happening here, but I am so sorry for what you had to go through…&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-8">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/08-hotel-four-seasons.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">08</span>
+                        </div>
+                        <h3 class="stop-card__title">Hotel Four Seasons</h3>
+                        <p class="stop-card__quote">&ldquo;Langdon had been in Prague for three days and, just like during his previous visits, he stayed at the Four Seasons. When the hotel manager insisted on providing him with the Royal Suite instead of his booked room…&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-9">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/09-charles-bridge.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">09</span>
+                        </div>
+                        <h3 class="stop-card__title">Charles Bridge</h3>
+                        <p class="stop-card__quote">&ldquo;He stared at the pointed weapon and immediately wondered if, conversely, he was dreaming this. When the woman reached his level, he realized that he was completely paralyzed by his own confusion and couldn't move from the spot.&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-10">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/10-american-embassy.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">10</span>
+                        </div>
+                        <h3 class="stop-card__title">American Embassy (Schönborn Palace)</h3>
+                        <p class="stop-card__quote">&ldquo;On the second floor of the American embassy, the doors just opened and Michael Harris walked out, noticeably shaken after a private meeting with the ambassador. He had just been partially 'briefed' and was still trying to process in his head all the implications of the top-secret information the ambassador had shared with him.&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-11">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/11-petrin-lookout-tower-and-mirror-maze.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">11</span>
+                        </div>
+                        <h3 class="stop-card__title">Petřín Lookout Tower and Mirror Maze</h3>
+                        <p class="stop-card__quote">&ldquo;Lieutenant Pavel burst into the visitor center beneath the Petřín Lookout Tower with a pistol in his hand.&rdquo;</p>
+                    </a>
+                </li>
+                <li class="stop-card">
+                    <a href="tour-locations.html#stop-12">
+                        <div class="stop-card__media">
+                            <img src="./images/stops/12-folimanka-park-and-bastion-u-bozich-muk.jpg" alt="" loading="lazy" decoding="async">
+                            <span class="stop-card__num">12</span>
+                        </div>
+                        <h3 class="stop-card__title">Folimanka Park and Bastion u Božích muk</h3>
+                        <p class="stop-card__quote">&ldquo;A tasteful bronze panel above the main entrance announced: GESSNER INSTITUTE. The doors of the bastion consisted of a wide, stylish pane of reinforced frosted glass in a steel frame.&rdquo;</p>
+                    </a>
+                </li>
+            </ol>
+
+            <div class="stops__progress" aria-hidden="true"><span></span></div>
         </section>
 
-        <!-- Mobile: stack layout for small screens -->
-        <style>
-            @media (max-width: 768px) {
-                #services {
-                    grid-template-columns: 1fr !important;
-                }
+        <!-- The tour: what it is, the practical facts, price -->
+        <section class="tour" id="services" aria-labelledby="tour-title">
+            <div class="tour__grid">
+                <div class="tour__head">
+                    <p class="tour__eyebrow">The tour</p>
+                    <h2 class="tour__title" id="tour-title">A private walk through the novel</h2>
+                    <p class="tour__lede">
+                        Your own guide takes your group to the twelve places from <em>The Secret of Secrets</em>.
+                        At every stop there&rsquo;s a puzzle about Langdon&rsquo;s story. Solve them all and you
+                        earn a picnic with a glass of wine in Pet&#345;&iacute;n park.
+                    </p>
+                </div>
 
-                #services>div:first-child {
-                    min-height: 280px !important;
-                }
+                <dl class="tour__facts">
+                    <div><dt>Duration</dt><dd>2&ndash;3 hours</dd></div>
+                    <div><dt>Group</dt><dd>Private, 2&ndash;8 people</dd></div>
+                    <div><dt>Language</dt><dd>English</dd></div>
+                    <div><dt>Meeting point</dt><dd>Astronomical Clock, Old Town Square</dd></div>
+                </dl>
 
-                #services>div:last-child {
-                    padding: 2.5rem 1.5rem !important;
-                }
-            }
-        </style>
+                <aside class="tour__price" aria-label="Price and booking">
+                    <p class="tour__price-from">From &euro;99 <span>per group</span></p>
+                    <a href="private-tour.html" class="btn-ink">Book a tour</a>
+                    <p class="tour__price-small">Reschedule up to 24 hours before &middot; Secure payment by Stripe</p>
+                </aside>
+            </div>
+        </section>
 
+        <!-- FAQ -->
+        <section class="faq" id="faq" aria-labelledby="faq-title">
+            <div class="faq__grid">
+                <div class="faq__intro">
+                    <p class="faq__eyebrow">FAQ</p>
+                    <h2 class="faq__title" id="faq-title">Before you book</h2>
+                    <p class="faq__contact">
+                        Didn&rsquo;t find your answer? Write to
+                        <a href="mailto:info@praguetrip.cz">info@praguetrip.cz</a>
+                    </p>
+                </div>
 
-        <!-- FAQ Section -->
-        <section class="section-padding bg-gradient-to-br from-slate-50 to-white" id="faq">
-            <div class="container-custom">
-                <div class="max-w-4xl mx-auto">
-                    <div class="text-center mb-16 animate-on-scroll">
-                        <h2 class="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-8 tracking-tight">
-                            Frequently Asked <span class="text-gradient">Questions</span>
-                        </h2>
-                        <p class="text-xl md:text-2xl text-slate-600 font-light leading-relaxed"></p>
-                        Everything you need to know about our Dan Brown adventures in Prague.
-                        </p>
+                <div class="faq__list">
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-1" aria-expanded="false" aria-controls="faq-a-1">
+                                <span>What makes the tour Dan Brown themed?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
+                            </button>
+                        </h3>
+                        <div class="faq__a" id="faq-a-1" role="region" aria-labelledby="faq-q-1" inert>
+                            <div><p>Every stop is a place from Dan Brown&rsquo;s <em>The Secret of Secrets</em>. At each one you get a puzzle or a few questions about Langdon&rsquo;s story. Solve them and you earn a small picnic with a glass of wine in Pet&#345;&iacute;n park.</p></div>
+                        </div>
                     </div>
-
-                    <div class="space-y-4 animate-on-scroll">
-                        <!-- FAQ Item 1 -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-1">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">What makes these tours Dan Brown themed?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-2" aria-expanded="false" aria-controls="faq-a-2">
+                                <span>Is the picnic included in the price?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
                             </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-1" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Our experiences are inspired by the themes, locations, and puzzle-solving elements
-                                    found in Dan Brown's novels.
-                                    At each location you will be given either a puzzle or a set of questions focused on
-                                    Langdon's story. By completing these challenges you will earn a small picnic and a
-                                    glass of wine in the Petrin park.
-                                </div>
-                            </div>
+                        </h3>
+                        <div class="faq__a" id="faq-a-2" role="region" aria-labelledby="faq-q-2" inert>
+                            <div><p>Yes. You earn it with your knowledge of Langdon&rsquo;s story, but don&rsquo;t worry: even if it&rsquo;s been a while since you read the book, there will still be a way to enjoy the wine.</p></div>
                         </div>
-
-                        <!-- FAQ Item Picnic -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-picnic">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">Is the picnic included in the price?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                    </div>
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-3" aria-expanded="false" aria-controls="faq-a-3">
+                                <span>How long does the tour last?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
                             </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-picnic" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Yes! It's earned by your skills and knowledge of Langdon's story. But don't worry,
-                                    there will be a way to enjoy the wine even if it has been a while since you read the
-                                    book. ;)
-                                </div>
-                            </div>
+                        </h3>
+                        <div class="faq__a" id="faq-a-3" role="region" aria-labelledby="faq-q-3" inert>
+                            <div><p>Usually 2&ndash;3 hours, depending on your group&rsquo;s pace and how long you&rsquo;d like to spend exploring each location.</p></div>
                         </div>
-
-                        <!-- FAQ Item 2 -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-2">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">How long do the private tours last?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                    </div>
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-4" aria-expanded="false" aria-controls="faq-a-4">
+                                <span>What&rsquo;s the maximum group size?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
                             </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-2" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Private tours typically last 2-3 hours, depending on your group's pace and
-                                    interests.
-                                    The duration of the tour incresases based on how many locations you would like to
-                                    explore in depth.
-                                </div>
-                            </div>
+                        </h3>
+                        <div class="faq__a" id="faq-a-4" role="region" aria-labelledby="faq-q-4" inert>
+                            <div><p>Up to 8 people, so everyone can hear the guide and join in the puzzles. For larger groups we can arrange more guides or split you into smaller teams.</p></div>
                         </div>
-
-                        <!-- FAQ Item 3 -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-3">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">What's the maximum group size for tours?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                    </div>
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-5" aria-expanded="false" aria-controls="faq-a-5">
+                                <span>What happens if it rains?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
                             </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-3" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Private tours accommodate up to 8 people for the best experience. For larger groups,
-                                    we can arrange multiple guides or split into smaller teams.
-                                </div>
-                            </div>
+                        </h3>
+                        <div class="faq__a" id="faq-a-5" role="region" aria-labelledby="faq-q-5" inert>
+                            <div><p>Prague&rsquo;s covered passages, churches and historic buildings give plenty of shelter in light rain. In heavy weather we can reschedule at no charge, or adapt the tour to focus on indoor locations.</p></div>
                         </div>
-
-                        <!-- FAQ Item 4 -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-4">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">What happens if it rains during our tour?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                    </div>
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-6" aria-expanded="false" aria-controls="faq-a-6">
+                                <span>Can I cancel or reschedule my booking?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
                             </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-4" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Prague's covered passages, churches, and historic buildings provide plenty of
-                                    shelter during light rain.
-                                    For heavy weather, we can reschedule at no charge or adapt the tour to focus on
-                                    indoor locations.
-
-                                </div>
-                            </div>
+                        </h3>
+                        <div class="faq__a" id="faq-a-6" role="region" aria-labelledby="faq-q-6" inert>
+                            <div><p>You can reschedule up to 24 hours before your tour. If you cancel up to 24 hours before your tour, we refund 50% with no questions asked. Emergencies such as illness or travel disruptions are handled case by case.</p></div>
                         </div>
-
-                        <!-- FAQ Item 5 -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-5">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">Can I cancel or reschedule my booking?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
+                    </div>
+                    <div class="faq__item">
+                        <h3 class="faq__q">
+                            <button type="button" id="faq-q-7" aria-expanded="false" aria-controls="faq-a-7">
+                                <span>Is the tour suitable for children?</span>
+                                <span class="faq__icon" aria-hidden="true"></span>
                             </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-5" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Yes! You can reschedule up to 24 hours before your tour.
-                                    For cancellations upto 24 hours before your tour we offer a 50% refund without any
-                                    questions.
-                                    Emergency cancellations due to illness or travel disruptions are handled
-                                    case-by-case.
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FAQ Item 6 -->
-
-
-                        <!-- FAQ Item 7 -->
-
-
-                        <!-- FAQ Item 8 -->
-                        <div
-                            class="faq-item bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                            <button
-                                class="faq-toggle w-full px-8 py-6 text-left font-semibold text-slate-900 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-accent-gold/20 focus:bg-slate-50 transition-all duration-300 rounded-2xl"
-                                aria-expanded="false" aria-controls="faq-content-8">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg">Are the experiences suitable for children?</span>
-                                    <svg class="faq-icon w-6 h-6 text-accent-gold transform transition-transform duration-300 ease-out"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                            </button>
-                            <div class="faq-content overflow-hidden transition-all duration-300 ease-out"
-                                id="faq-content-8" style="max-height: 0;">
-                                <div class="px-8 pb-6 text-slate-600 leading-relaxed">
-                                    Yes the tours are family friendly, but you must account for the fact that we will be
-                                    walking a lot and there will be a lot of stairs.
-                                </div>
-                            </div>
+                        </h3>
+                        <div class="faq__a" id="faq-a-7" role="region" aria-labelledby="faq-q-7" inert>
+                            <div><p>Yes, the tour is family friendly. Just keep in mind that there&rsquo;s a lot of walking and quite a few stairs.</p></div>
                         </div>
                     </div>
                 </div>
@@ -629,58 +373,54 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-primary-dark text-text-light section-padding" id="contact">
-        <div class="container-custom">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <!-- Company Info -->
-                <div class="animate-on-scroll">
-                    <h3 class="text-xl font-serif font-bold text-accent-gold mb-4">Prague Dan Brown Adventures</h3>
-                    <p class="text-text-light/80 mb-4">
-                        Discover the mysteries of Prague through immersive Dan Brown-themed experiences.
-                    </p>
-                </div>
+    <footer class="site-footer" id="contact">
+        <div class="site-footer__cta">
+            <p class="site-footer__cta-title">Walk the novel with us.</p>
+            <a href="private-tour.html" class="btn-paper">Book a tour</a>
+        </div>
 
-                <!-- Contact Info -->
-                <div class="animate-on-scroll">
-                    <h4 class="text-lg font-semibold text-accent-gold mb-4">Contact Us</h4>
-                    <div class="space-y-2 text-text-light/80">
-                        <p>Email: info@praguetrip.cz</p>
-                        <p>Phone: +420 731 023 835</p>
-                        <p>Prague, Czech Republic</p>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="animate-on-scroll">
-                    <h4 class="text-lg font-semibold text-accent-gold mb-4">Quick Links</h4>
-                    <div class="space-y-2">
-                        <a href="#about"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">About</a>
-                        <a href="#services"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">Services</a>
-                        <a href="#faq"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">FAQ</a>
-                        <a href="private-tour.html"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">Private
-                            Tours</a>
-
-                    </div>
-                </div>
+        <div class="site-footer__cols">
+            <div class="site-footer__brand">
+                <p class="site-footer__name">Prague Trip</p>
+                <p class="site-footer__about">Private Dan Brown walking tours through the Prague of
+                    <em>The Secret of Secrets</em>, with a local guide.</p>
             </div>
 
-            <!-- Copyright -->
-            <div class="border-t border-primary-medium pt-8 text-center text-text-light/60">
-                <p>&copy; 2024 Prague Dan Brown Adventures. All rights reserved.</p>
-                <div class="mt-2 space-x-4">
-                    <a href="#" class="hover:text-accent-gold transition-colors duration-200">Privacy Policy</a>
-                    <a href="#" class="hover:text-accent-gold transition-colors duration-200">Terms of Service</a>
-                </div>
+            <div>
+                <h2 class="site-footer__heading">Contact</h2>
+                <ul class="site-footer__list">
+                    <li><a href="mailto:info@praguetrip.cz">info@praguetrip.cz</a></li>
+                    <li><a href="tel:+420731023835">+420 731 023 835</a></li>
+                    <li>Prague, Czech Republic</li>
+                </ul>
             </div>
+
+            <div>
+                <h2 class="site-footer__heading">Tour</h2>
+                <ul class="site-footer__list">
+                    <li><a href="#services">The Tour</a></li>
+                    <li><a href="tour-locations.html">Locations</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="private-tour.html">Book a tour</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="site-footer__heading">Legal</h2>
+                <ul class="site-footer__list">
+                    <li><a href="terms.html">Terms &amp; Conditions</a></li>
+                    <!-- Privacy Policy: link privacy.html here once the page exists -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="site-footer__bottom">
+            <p>&copy; 2026 Prague Trip</p>
         </div>
     </footer>
 
     <!-- JavaScript -->
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js?v=5"></script>
     <script src="./js/animations.js"></script>
 </body>
 

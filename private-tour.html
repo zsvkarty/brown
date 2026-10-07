@@ -7,14 +7,14 @@
     <meta name="description"
         content="Join our exclusive Dan Brown Prague Walking Tour. Discover hidden symbols, ancient secrets, and cryptographic puzzles in Prague's medieval streets with expert local guides.">
     <meta name="keywords" content="Dan Brown Prague tour, private walking tour, Prague mysteries, guided tour, Prague attractions, historical tour">
-    <title>Private Dan Brown Prague Tour - Prague Mysteries</title>
+    <title>Private Dan Brown Prague Tour | Prague Trip</title>
 
     <!-- Preload critical resources -->
     <link rel="preload" href="./newhero.png" as="image">
-    <link rel="preload" href="./css/output.css?v=4" as="style">
+    <link rel="preload" href="./css/output.css?v=11" as="style">
 
     <!-- Stylesheets -->
-    <link href="./css/output.css?v=4" rel="stylesheet">
+    <link href="./css/output.css?v=11" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -22,47 +22,57 @@
 
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="header">
-        <nav class="navbar-floating scrolled transition-all duration-500" role="navigation" aria-label="Main navigation">
-            <div class="flex items-center justify-between py-4 px-8">
-                <!-- Logo/Brand -->
-                <div class="flex items-center">
-                    <a href="index.html" class="text-xl font-display font-semibold text-slate-900 hover:text-accent-gold transition-colors">
-                        Prague Mysteries
-                    </a>
-                </div>
+    <header class="site-header" id="site-header">
+        <div class="site-header__bar">
+            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Open menu"
+                aria-expanded="false" aria-controls="site-menu">
+                <span class="menu-toggle__lines" aria-hidden="true"><span></span><span></span><span></span></span>
+            </button>
 
-                <!-- Navigation Menu -->
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="tour-locations.html" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">Adventures</a>
-                    <a href="index.html#faq" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">FAQ</a>
-                    <a href="index.html#contact" class="text-slate-700 hover:text-accent-gold font-medium transition-colors">Contact</a>
-                    <a href="private-tour.html" class="btn-primary text-sm font-semibold px-5 py-2">Book Tour</a>
-                </div>
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="index.html#services" class="site-nav__link">The Tour</a>
+                <a href="tour-locations.html" class="site-nav__link">Locations</a>
+                <a href="index.html#faq" class="site-nav__link">FAQ</a>
+                <a href="#contact" class="site-nav__link">Contact</a>
+            </nav>
 
-                <!-- Mobile Menu Button -->
-                <button
-                    class="md:hidden text-slate-700 hover:text-accent-gold focus:outline-none focus:text-accent-gold"
-                    id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+            <a href="private-tour.html" class="header-cta">Book a tour</a>
+        </div>
 
-            <!-- Mobile Menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-6 pt-2 pb-6 space-y-2 border-t border-white/10">
-                    <a href="tour-locations.html"
-                        class="block px-4 py-2 text-slate-700 hover:text-accent-gold hover:bg-slate-50 rounded-lg transition-all duration-200">Adventures</a>
-                    
-                    <a href="index.html#contact"
-                        class="block px-4 py-2 text-slate-700 hover:text-accent-gold hover:bg-slate-50 rounded-lg transition-all duration-200">Contact</a>
-                </div>
-            </div>
-        </nav>
+        <a href="index.html" class="brand-block" aria-label="Prague Trip, home">
+            <span class="brand-block__name">Prague<br>Trip</span>
+            <span class="brand-block__tag">Dan Brown Tours</span>
+        </a>
     </header>
+
+    <!-- Mobile menu (grows out of the menu button, see .site-menu in css/input.css) -->
+    <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu" inert>
+        <div class="site-menu__top">
+            <button type="button" class="site-menu__close" id="menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5" aria-hidden="true">
+                    <path d="M4 4l16 16M20 4L4 20" />
+                </svg>
+            </button>
+        </div>
+
+        <p class="site-menu__title">Menu</p>
+
+        <nav class="site-menu__links" aria-label="Mobile navigation">
+            <a href="index.html" style="--i: 0">Home</a>
+            <a href="index.html#services" style="--i: 1">The Tour</a>
+            <a href="tour-locations.html" style="--i: 2">Locations</a>
+            <a href="index.html#faq" style="--i: 3">FAQ</a>
+            <a href="#contact" style="--i: 4">Contact</a>
+        </nav>
+
+        <div class="site-menu__footer" style="--i: 6">
+            <a href="private-tour.html" class="site-menu__cta">Book a tour</a>
+            <div>
+                <a href="tel:+420731023835">+420 731 023 835</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main>
@@ -75,7 +85,7 @@
                         <ol class="flex items-center space-x-2 text-slate-600">
                             <li><a href="index.html" class="hover:text-accent-gold transition-colors">Home</a></li>
                             <li><span class="mx-2">/</span></li>
-                            <li><a href="tour-locations.html" class="hover:text-accent-gold transition-colors">Adventures</a></li>
+                            <li><a href="tour-locations.html" class="hover:text-accent-gold transition-colors">Locations</a></li>
                             <li><span class="mx-2">/</span></li>
                             <li class="text-accent-gold font-medium">Private Tour</li>
                         </ol>
@@ -743,53 +753,49 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-primary-dark text-text-light section-padding" id="contact">
-        <div class="container-custom">
-            <div class="grid md:grid-cols-3 gap-6 md:gap-6 md:p-8 mb-8">
-                <!-- Company Info -->
-                <div class="animate-on-scroll">
-                    <h3 class="text-xl font-serif font-bold text-accent-gold mb-4">Prague Dan Brown Adventures</h3>
-                    <p class="text-text-light/80 mb-4">
-                        Discover the mysteries of Prague through immersive Dan Brown-themed experiences.
-                    </p>
-                </div>
+    <footer class="site-footer" id="contact">
+        <div class="site-footer__cta">
+            <p class="site-footer__cta-title">Walk the novel with us.</p>
+            <a href="private-tour.html" class="btn-paper">Book a tour</a>
+        </div>
 
-                <!-- Contact Info -->
-                <div class="animate-on-scroll">
-                    <h4 class="text-lg font-semibold text-accent-gold mb-4">Contact Us</h4>
-                    <div class="space-y-2 text-text-light/80">
-                        <p>Email: info@pragueadventures.com</p>
-                        <p>Phone: +420 731 023 835</p>
-                        <p>Prague, Czech Republic</p>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="animate-on-scroll">
-                    <h4 class="text-lg font-semibold text-accent-gold mb-4">Quick Links</h4>
-                    <div class="space-y-2">
-                        <a href="index.html#about"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">About</a>
-                        <a href="index.html#services"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">Services</a>
-                        <a href="index.html#faq"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">FAQ</a>
-                        <a href="private-tour.html"
-                            class="block text-text-light/80 hover:text-accent-gold transition-colors duration-200">Private
-                            Tours</a>
-                        
-                    </div>
-                </div>
+        <div class="site-footer__cols">
+            <div class="site-footer__brand">
+                <p class="site-footer__name">Prague Trip</p>
+                <p class="site-footer__about">Private Dan Brown walking tours through the Prague of
+                    <em>The Secret of Secrets</em>, with a local guide.</p>
             </div>
 
-            <!-- Copyright -->
-            <div class="border-t border-primary-medium pt-8 text-center text-text-light/60">
-                <p>&copy; 2024 Prague Dan Brown Adventures. All rights reserved.</p>
-                <div class="mt-2 space-x-4">
-                    <a href="#" class="hover:text-accent-gold transition-colors duration-200">Privacy Policy</a>
-                    <a href="#" class="hover:text-accent-gold transition-colors duration-200">Terms of Service</a>
-                </div>
+            <div>
+                <h2 class="site-footer__heading">Contact</h2>
+                <ul class="site-footer__list">
+                    <li><a href="mailto:info@praguetrip.cz">info@praguetrip.cz</a></li>
+                    <li><a href="tel:+420731023835">+420 731 023 835</a></li>
+                    <li>Prague, Czech Republic</li>
+                </ul>
             </div>
+
+            <div>
+                <h2 class="site-footer__heading">Tour</h2>
+                <ul class="site-footer__list">
+                    <li><a href="index.html#services">The Tour</a></li>
+                    <li><a href="tour-locations.html">Locations</a></li>
+                    <li><a href="index.html#faq">FAQ</a></li>
+                    <li><a href="private-tour.html">Book a tour</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h2 class="site-footer__heading">Legal</h2>
+                <ul class="site-footer__list">
+                    <li><a href="terms.html">Terms &amp; Conditions</a></li>
+                    <!-- Privacy Policy: link privacy.html here once the page exists -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="site-footer__bottom">
+            <p>&copy; 2026 Prague Trip</p>
         </div>
     </footer>
 
@@ -881,7 +887,7 @@
 
     <!-- JavaScript -->
     <script src="./js/vendor/supabase.min.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js?v=5"></script>
     <script src="./js/animations.js"></script>
     <script src="./js/cart.js"></script>
     <script src="./js/booking-api.js?v=2"></script>
